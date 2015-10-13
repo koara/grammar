@@ -22,10 +22,10 @@ TOKEN : {
   | <EOL : (" " | "\t")* ("\r"|"\n"|"\r\n")>
   | <EQ: "=">
   | <GT: ">">
-  | <LBRACKET: "[">
+  | <LBRACK: "[">
   | <LPAREN: "(">
   | <LT: "<">
-  | <RBRACKET: "]">
+  | <RBRACK: "]">
   | <RPAREN: ")">
   | <SPACE: " ">
   | <TAB: "\t">
@@ -115,7 +115,7 @@ void Text()       : {/*@bgen(jjtree) Text */
   try {
 /*@egen*/
   (LOOKAHEAD(1) (   		t = <BACKSLASH>								{ s.append(t.image);}
-      | t = <CHAR_SEQUENCE> 						{ s.append(t.image);}      | t = <DASH> 									{ s.append(t.image);}      | t = <DIGITS> 								{ s.append(t.image);}      | t = <DOT>									{ s.append(t.image);}      | t = <EQ>									{ s.append(t.image);}      | t = <ESCAPED_CHAR> 							{ s.append(t.image.substring(1)); }      | t = <GT>									{ s.append(t.image);}      | t = <LPAREN>								{ s.append(t.image);}      | t = <LT>									{ s.append(t.image);}      | t = <RBRACKET>								{ s.append(t.image);}      | t = <RPAREN>								{ s.append(t.image);}      | LOOKAHEAD({!nextAfterSpace(EOL, EOF)}) (				t = <SPACE> 						{ s.append(t.image); }		  	  | t = <TAB> 							{ s.append("    "); }	  )
+      | t = <CHAR_SEQUENCE> 						{ s.append(t.image);}      | t = <DASH> 									{ s.append(t.image);}      | t = <DIGITS> 								{ s.append(t.image);}      | t = <DOT>									{ s.append(t.image);}      | t = <EQ>									{ s.append(t.image);}      | t = <ESCAPED_CHAR> 							{ s.append(t.image.substring(1)); }      | t = <GT>									{ s.append(t.image);}      | t = <LPAREN>								{ s.append(t.image);}      | t = <LT>									{ s.append(t.image);}      | t = <RBRACK>								{ s.append(t.image);}      | t = <RPAREN>								{ s.append(t.image);}      | LOOKAHEAD({!nextAfterSpace(EOL, EOF)}) (				t = <SPACE> 						{ s.append(t.image); }		  	  | t = <TAB> 							{ s.append("    "); }	  )
     )  )+/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
@@ -135,7 +135,7 @@ void Text()       : {/*@bgen(jjtree) Text */
                           jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t;} {/*@bgen(jjtree) Text */
   try {
-/*@egen*/  (      t = <ASTERISK>    | t = <BACKTICK>    | t = <LBRACKET>    | t = <UNDERSCORE>  )/*@bgen(jjtree)*/
+/*@egen*/  (      t = <ASTERISK>    | t = <BACKTICK>    | t = <LBRACK>    | t = <UNDERSCORE>  )/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;

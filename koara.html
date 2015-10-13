@@ -24,10 +24,10 @@
 | &lt;EOL: (" " | "\t")* ("\r" | "\n" | "\r\n")&gt;
 | &lt;EQ: "="&gt;
 | &lt;GT: "&gt;"&gt;
-| &lt;LBRACKET: "["&gt;
+| &lt;LBRACK: "["&gt;
 | &lt;LPAREN: "("&gt;
 | &lt;LT: "&lt;"&gt;
-| &lt;RBRACKET: "]"&gt;
+| &lt;RBRACK: "]"&gt;
 | &lt;RPAREN: ")"&gt;
 | &lt;SPACE: " "&gt;
 | &lt;TAB: "\t"&gt;
@@ -63,12 +63,12 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod7">Text</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;BACKSLASH&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;GT&gt; | &lt;LPAREN&gt; | &lt;LT&gt; | &lt;RBRACKET&gt; | &lt;RPAREN&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) ) )+</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;BACKSLASH&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;GT&gt; | &lt;LPAREN&gt; | &lt;LT&gt; | &lt;RBRACK&gt; | &lt;RPAREN&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) ) )+</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">LooseChar</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;ASTERISK&gt; | &lt;BACKTICK&gt; | &lt;LBRACKET&gt; | &lt;UNDERSCORE&gt; )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;ASTERISK&gt; | &lt;BACKTICK&gt; | &lt;LBRACK&gt; | &lt;UNDERSCORE&gt; )</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod6">LineBreak</A></TD>

@@ -177,7 +177,7 @@ if (jjtc000) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case ASTERISK:
         case BACKTICK:
-        case LBRACKET:
+        case LBRACK:
         case UNDERSCORE:{
           LooseChar();
           break;
@@ -254,8 +254,8 @@ s.append(t.image);
 s.append(t.image);
           break;
           }
-        case RBRACKET:{
-          t = jj_consume_token(RBRACKET);
+        case RBRACK:{
+          t = jj_consume_token(RBRACK);
 s.append(t.image);
           break;
           }
@@ -318,8 +318,8 @@ if (jjtc000) {
         t = jj_consume_token(BACKTICK);
         break;
         }
-      case LBRACKET:{
-        t = jj_consume_token(LBRACKET);
+      case LBRACK:{
+        t = jj_consume_token(LBRACK);
         break;
         }
       case UNDERSCORE:{
@@ -514,7 +514,7 @@ if (jjtc000) {
 
   private boolean jj_3R_23()
  {
-    if (jj_scan_token(RBRACKET)) return true;
+    if (jj_scan_token(RBRACK)) return true;
     return false;
   }
 

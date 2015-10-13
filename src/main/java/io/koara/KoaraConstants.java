@@ -35,13 +35,13 @@ public interface KoaraConstants {
   /** RegularExpression Id. */
   int GT = 12;
   /** RegularExpression Id. */
-  int LBRACKET = 13;
+  int LBRACK = 13;
   /** RegularExpression Id. */
   int LPAREN = 14;
   /** RegularExpression Id. */
   int LT = 15;
   /** RegularExpression Id. */
-  int RBRACKET = 16;
+  int RBRACK = 16;
   /** RegularExpression Id. */
   int RPAREN = 17;
   /** RegularExpression Id. */
