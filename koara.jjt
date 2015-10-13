@@ -1,0 +1,54 @@
+options {  BUILD_NODE_FILES = true;  MULTI = true;  NODE_DEFAULT_VOID = true;  STATIC=false;  UNICODE_INPUT = true;  VISITOR=true;}
+PARSER_BEGIN(Koara)
+  package io.koara;
+  import java.util.Arrays;
+  public class Koara {      private boolean blockAhead() {	    if(getToken(1).kind == EOL) {	      Token t;	      int i = 2;	        do {	          do {	            t = getToken(i++);	          } while (t.kind == SPACE || t.kind == TAB);	        } while(t.kind == EOL);      	        return (t.kind != EOF);	      }	      return false;	  }	  private boolean nextAfterSpace(Integer... tokens) {	      int i = skip(1, SPACE, TAB);	      return Arrays.asList(tokens).contains(getToken(i).kind);	  }	  private int skip(int offset, Integer... tokens) {	      for(int i=offset;;i++) {	        Token t = getToken(i);	        if(t.kind == EOF || !Arrays.asList(tokens).contains(t.kind)) { return i; }	      }	  }	  private boolean textAhead() {	    int i = skip(1, SPACE, TAB);	    if(getToken(i).kind == EOL && getToken(i+1).kind != EOL && getToken(i+1).kind != EOF) {	       return true;	    }	    return false;	  }      }
+PARSER_END(Koara)
+
+TOKEN : {
+    <IMAGE_LABEL : "image:" >
+  | <ESCAPED_CHAR : "\\" ["*", "`", "\\", "-", ".", "=", ">", "[", "(", "<", "]", ")", "_"] >
+  | <ASTERISK : "*">
+  | <BACKTICK: "`">
+  | <BACKSLASH: "\\">
+  | <CHAR_SEQUENCE: (~["*", "`", "\\", "-",  "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_", " ", "\t", "\r", "\n"])+>
+  | <DASH: "-">
+  | <DIGITS : (["0"-"9"])+>
+  | <DOT: ".">
+  | <EOL : (" " | "\t")* ("\r"|"\n"|"\r\n")>
+  | <EQ: "=">
+  | <GT: ">">
+  | <LBRACKET: "[">
+  | <LPAREN: "(">
+  | <LT: "<">
+  | <RBRACKET: "]">
+  | <RPAREN: ")">
+  | <SPACE: " ">
+  | <TAB: "\t">
+  | <UNDERSCORE: "_">
+}
+
+ASTDocument Document() #Document : {} {
+  (LOOKAHEAD(1) <EOL>)*  WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace())+ BlockElement())* (<EOL>)* WhiteSpace() ] <EOF>  { return jjtThis; }
+}
+
+void BlockElement() : {} {
+  Paragraph()
+}
+
+void Paragraph() #Paragraph : {} {
+  Inline() (LOOKAHEAD({textAhead()}) LineBreak() WhiteSpace() Inline())*
+}
+
+void Inline() : {} {
+  (
+      Text()    | LooseChar()
+  )+
+}
+
+void Text() #Text : {Token t; StringBuffer s = new StringBuffer();} {
+  (LOOKAHEAD(1) (   		t = <BACKSLASH>								{ s.append(t.image);}
+      | t = <CHAR_SEQUENCE> 						{ s.append(t.image);}      | t = <DASH> 									{ s.append(t.image);}      | t = <DIGITS> 								{ s.append(t.image);}      | t = <DOT>									{ s.append(t.image);}      | t = <EQ>									{ s.append(t.image);}      | t = <ESCAPED_CHAR> 							{ s.append(t.image.substring(1)); }      | t = <GT>									{ s.append(t.image);}      | t = <LPAREN>								{ s.append(t.image);}      | t = <LT>									{ s.append(t.image);}      | t = <RBRACKET>								{ s.append(t.image);}      | t = <RPAREN>								{ s.append(t.image);}      | LOOKAHEAD({!nextAfterSpace(EOL, EOF)}) (				t = <SPACE> 						{ s.append(t.image); }		  	  | t = <TAB> 							{ s.append("    "); }	  )
+    )  )+
+  { jjtThis.jjtSetValue(s.toString()); }
+}void LooseChar() #Text : {Token t;} {  (      t = <ASTERISK>    | t = <BACKTICK>    | t = <LBRACKET>    | t = <UNDERSCORE>  )  { jjtThis.jjtSetValue(t.image); } 	}void LineBreak() #LineBreak : {} {  (<SPACE> | <TAB>)* <EOL>}void WhiteSpace() : {} {  (LOOKAHEAD (1) (<SPACE> | <TAB>))*}

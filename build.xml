@@ -1,0 +1,11 @@
+<project name="koara" default="generate" basedir=".">
+
+  <property name="javacc.home" value="/Library/javacc/"/>
+
+  <target name="generate">
+    <jjtree target="koara.jjt" outputdirectory="src/main/java/io/koara" javacchome="${javacc.home}"/>
+    <javacc target="src/main/java/io/koara/koara.jj" outputdirectory="src/main/java/io/koara" javacchome="${javacc.home}"/>
+    <jjdoc target="src/main/java/io/koara/koara.jj" javacchome="${javacc.home}"/>
+  </target>
+  
+</project>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>BNF for koara.jj</TITLE>
+</HEAD>
+<BODY>
+<H1 ALIGN=CENTER>BNF for koara.jj</H1>
+<H2 ALIGN=CENTER>TOKENS</H2>
+<TABLE>
+ <!-- Token -->
+ <TR>
+  <TD>
+   <PRE>
+&lt;DEFAULT&gt; TOKEN : {
+&lt;IMAGE_LABEL: "image:"&gt;
+| &lt;ESCAPED_CHAR: "\\" ["*","`","\\","-",".","=","&gt;","[","(","&lt;","]",")","_"]&gt;
+| &lt;ASTERISK: "*"&gt;
+| &lt;BACKTICK: "`"&gt;
+| &lt;BACKSLASH: "\\"&gt;
+| &lt;CHAR_SEQUENCE: (~["*","`","\\","-","0"-"9",".","=","&gt;","[","(","&lt;","]",")","_"," ","\t","\r","\n"])+&gt;
+| &lt;DASH: "-"&gt;
+| &lt;DIGITS: (["0"-"9"])+&gt;
+| &lt;DOT: "."&gt;
+| &lt;EOL: (" " | "\t")* ("\r" | "\n" | "\r\n")&gt;
+| &lt;EQ: "="&gt;
+| &lt;GT: "&gt;"&gt;
+| &lt;LBRACKET: "["&gt;
+| &lt;LPAREN: "("&gt;
+| &lt;LT: "&lt;"&gt;
+| &lt;RBRACKET: "]"&gt;
+| &lt;RPAREN: ")"&gt;
+| &lt;SPACE: " "&gt;
+| &lt;TAB: "\t"&gt;
+| &lt;UNDERSCORE: "_"&gt;
+}
+
+   </PRE>
+  </TD>
+ </TR>
+</TABLE>
+<H2 ALIGN=CENTER>NON-TERMINALS</H2>
+<TABLE>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod1">Document</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;EOL&gt; )* <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> )+ <A HREF="#prod3">BlockElement</A> )* ( &lt;EOL&gt; )* <A HREF="#prod2">WhiteSpace</A> )? &lt;EOF&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod3">BlockElement</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod4">Paragraph</A></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod4">Paragraph</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod5">Inline</A> ( <A HREF="#prod6">LineBreak</A> <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod5">Inline</A> )*</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">Inline</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod7">Text</A> | <A HREF="#prod8">LooseChar</A> )+</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod7">Text</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;BACKSLASH&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;GT&gt; | &lt;LPAREN&gt; | &lt;LT&gt; | &lt;RBRACKET&gt; | &lt;RPAREN&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) ) )+</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">LooseChar</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;ASTERISK&gt; | &lt;BACKTICK&gt; | &lt;LBRACKET&gt; | &lt;UNDERSCORE&gt; )</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod6">LineBreak</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;SPACE&gt; | &lt;TAB&gt; )* &lt;EOL&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod2">WhiteSpace</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;SPACE&gt; | &lt;TAB&gt; ) )*</TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>
