@@ -36,7 +36,7 @@ public class ComplianceTest {
 	
 	@Parameters(name= "{0}: {1}")
 	public static Iterable<Object[]> data() {
-		List<Object[]> modules = new ArrayList<>();
+		List<Object[]> modules = new ArrayList<Object[]>();
 		for(File module : TESTSUITE_FOLDER.toFile().listFiles()) {
 			if(include.size() == 0 || include.contains(module.getName())) {
 				for(File testcase : module.listFiles()) {
