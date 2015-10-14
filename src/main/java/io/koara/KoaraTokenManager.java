@@ -72,35 +72,35 @@ private int jjStopAtPos(int pos, int kind)
 private int jjMoveStringLiteralDfa0_0(){
    switch(curChar)
    {
-      case 9:
+      case 9: // tab
          return jjStartNfaWithStates_0(0, 19, 8);
-      case 32:
+      case 32: // space
          return jjStartNfaWithStates_0(0, 18, 8);
-      case 40:
+      case 40: // (
          return jjStopAtPos(0, 14);
-      case 41:
+      case 41: // )
          return jjStopAtPos(0, 17);
-      case 42:
+      case 42: // *
          return jjStopAtPos(0, 3);
-      case 45:
+      case 45: // -
          return jjStopAtPos(0, 7);
-      case 46:
+      case 46: // .
          return jjStopAtPos(0, 9);
-      case 60:
+      case 60: // <
          return jjStopAtPos(0, 15);
-      case 61:
+      case 61: // =
          return jjStopAtPos(0, 11);
-      case 62:
+      case 62: // >
          return jjStopAtPos(0, 12);
-      case 91:
+      case 91: // [
          return jjStopAtPos(0, 13);
-      case 92:
+      case 92: // \
          return jjStartNfaWithStates_0(0, 5, 1);
-      case 93:
+      case 93: // ]
          return jjStopAtPos(0, 16);
-      case 95:
+      case 95: // _
          return jjStopAtPos(0, 20);
-      case 96:
+      case 96: // `
          return jjStopAtPos(0, 4);
       case 105:
          return jjMoveStringLiteralDfa1_0(0x2L);

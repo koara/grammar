@@ -7,7 +7,8 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	@Override
 	public Object visit(ASTDocument node, Object data) {
 		out = new StringBuffer();
-		return super.visit(node, data);
+		node.childrenAccept(this, data);
+		return null;
 	}
 		
 	@Override
