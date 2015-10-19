@@ -9,8 +9,9 @@ public interface KoaraVisitor
   public Object visit(ASTList node, Object data);
   public Object visit(ASTListItem node, Object data);
   public Object visit(ASTParagraph node, Object data);
+  public Object visit(ASTImage node, Object data);
   public Object visit(ASTLink node, Object data);
   public Object visit(ASTText node, Object data);
   public Object visit(ASTLineBreak node, Object data);
 }
-/* JavaCC - OriginalChecksum=ff43255a1c1763597712afeb3665db73 (do not edit this line) */
+/* JavaCC - OriginalChecksum=d11939786754209a6d9e9476b2f901ef (do not edit this line) */

@@ -24,6 +24,9 @@ public class KoaraDefaultVisitor implements KoaraVisitor{
   public Object visit(ASTParagraph node, Object data){
     return defaultVisit(node, data);
   }
+  public Object visit(ASTImage node, Object data){
+    return defaultVisit(node, data);
+  }
   public Object visit(ASTLink node, Object data){
     return defaultVisit(node, data);
   }
@@ -34,4 +37,4 @@ public class KoaraDefaultVisitor implements KoaraVisitor{
     return defaultVisit(node, data);
   }
 }
-/* JavaCC - OriginalChecksum=58a9bacedbac67b0dcff1f3f16eaa863 (do not edit this line) */
+/* JavaCC - OriginalChecksum=5f2de49e6cdfef207fc1e0051ea88a5a (do not edit this line) */

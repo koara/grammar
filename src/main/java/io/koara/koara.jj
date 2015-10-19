@@ -50,7 +50,7 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
                            jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t; int heading=0;} {/*@bgen(jjtree) Heading */
   try {
-/*@egen*/  (LOOKAHEAD(1) <EQ> {heading++;})+ WhiteSpace()  (    Text()    | LOOKAHEAD(Link()) Link()    | LooseChar()  )*/*@bgen(jjtree)*/
+/*@egen*/  (LOOKAHEAD(1) <EQ> {heading++;})+ WhiteSpace()  (    Text()    | LOOKAHEAD(Image()) Image()    | LOOKAHEAD(Link()) Link()    | LooseChar()  )*/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;
@@ -223,15 +223,46 @@ void Paragraph()            : {/*@bgen(jjtree) Paragraph */
 
 void Inline() : {} {
   (
-      Text()    | LOOKAHEAD(Link()) Link()    | LooseChar()
+      Text()    | LOOKAHEAD(Image()) Image()    | LOOKAHEAD(Link()) Link()    | LooseChar()
   )+
-}void Link()       : {/*@bgen(jjtree) Link */
+}void Image()        : {/*@bgen(jjtree) Image */
+                       ASTImage jjtn000 = new ASTImage(JJTIMAGE);
+                       boolean jjtc000 = true;
+                       jjtree.openNodeScope(jjtn000);
+/*@egen*/String ref = "";} {/*@bgen(jjtree) Image */
+  try {
+/*@egen*/  <LBRACK> WhiteSpace() <IMAGE_LABEL> WhiteSpace() (ResourceText() | LooseChar())+ WhiteSpace() <RBRACK> [ LOOKAHEAD(ResourceUrl()) (ref = ResourceUrl()) ]/*@bgen(jjtree)*/
+  {
+    jjtree.closeNodeScope(jjtn000, true);
+    jjtc000 = false;
+  }
+/*@egen*/  { jjtn000.jjtSetValue(ref); }/*@bgen(jjtree)*/
+  } catch (Throwable jjte000) {
+    if (jjtc000) {
+      jjtree.clearNodeScope(jjtn000);
+      jjtc000 = false;
+    } else {
+      jjtree.popNode();
+    }
+    if (jjte000 instanceof RuntimeException) {
+      throw (RuntimeException)jjte000;
+    }
+    if (jjte000 instanceof ParseException) {
+      throw (ParseException)jjte000;
+    }
+    throw (Error)jjte000;
+  } finally {
+    if (jjtc000) {
+      jjtree.closeNodeScope(jjtn000, true);
+    }
+  }
+/*@egen*/}void Link()       : {/*@bgen(jjtree) Link */
                      ASTLink jjtn000 = new ASTLink(JJTLINK);
                      boolean jjtc000 = true;
                      jjtree.openNodeScope(jjtn000);
 /*@egen*/String ref = "";} {/*@bgen(jjtree) Link */
   try {
-/*@egen*/  <LBRACK> WhiteSpace() (ResourceText() | LooseChar())+ WhiteSpace() <RBRACK> [ LOOKAHEAD(ResourceUrl()) (ref = ResourceUrl()) ]/*@bgen(jjtree)*/
+/*@egen*/  <LBRACK> WhiteSpace() (LOOKAHEAD(Image()) (Image()) | ResourceText() | LooseChar())+ WhiteSpace() <RBRACK> [ LOOKAHEAD(ResourceUrl()) (ref = ResourceUrl()) ]/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;

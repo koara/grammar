@@ -73,6 +73,14 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTImage node, Object data) {
+		out.append("<img src=\"" + escapeUrl(node.value.toString()) + "\" alt=\"");
+		super.visit(node, data);
+		out.append("\" />");
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTLink node, Object data) {
 		out.append("<a href=\"" + escapeUrl(node.value.toString()) + "\">");
 		super.visit(node, data);
