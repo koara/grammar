@@ -72,6 +72,14 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 		return null;
 	}
 	
+	@Override
+	public Object visit(ASTLink node, Object data) {
+		out.append("<a href=\"" + escapeUrl(node.value.toString()) + "\">");
+		super.visit(node, data);
+		out.append("</a>");
+		return null;
+	}
+	
 		
 	@Override
 	public Object visit(ASTText node, Object data) {
@@ -90,6 +98,17 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	public Object visit(ASTLineBreak node, Object data) {
 		out.append("<br>\n" + indent());
 		return super.visit(node, data);
+	}
+	
+	public String escapeUrl(String text) {
+		return text.replaceAll(" ", "%20")
+				.replaceAll("\"", "%22")
+				.replaceAll("`", "%60")
+				.replaceAll("<", "%3C")
+				.replaceAll(">", "%3E")
+				.replaceAll("\\[", "%5B")
+				.replaceAll("\\]", "%5D")
+				.replaceAll("\\\\", "%5C");
 	}
 	
 	public String indent() {

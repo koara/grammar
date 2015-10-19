@@ -9,8 +9,9 @@ public interface KoaraTreeConstants
   public int JJTLIST = 3;
   public int JJTLISTITEM = 4;
   public int JJTPARAGRAPH = 5;
-  public int JJTTEXT = 6;
-  public int JJTLINEBREAK = 7;
+  public int JJTLINK = 6;
+  public int JJTTEXT = 7;
+  public int JJTLINEBREAK = 8;
 
 
   public String[] jjtNodeName = {
@@ -20,8 +21,9 @@ public interface KoaraTreeConstants
     "List",
     "ListItem",
     "Paragraph",
+    "Link",
     "Text",
     "LineBreak",
   };
 }
-/* JavaCC - OriginalChecksum=7b79de1862dcaddb70ae3390b5840a50 (do not edit this line) */
+/* JavaCC - OriginalChecksum=938eef314fa27985d36fc4ab78ce6e17 (do not edit this line) */

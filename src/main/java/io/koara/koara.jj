@@ -9,28 +9,7 @@ package io.koara;
 /*@egen*/	private int currentBlockLevel = 0;  private boolean blockAhead() {    if(getToken(1).kind == EOL) {      Token t;      int i = 2;      int eol = 0;              do {              do {             t = getToken(i++);                 if(t.kind == EOL && currentBlockLevel > 0 && ++eol > 2) { return false; }                 if(t.kind == GT) {               	   if(t.beginColumn == 1 && currentBlockLevel > 0)  {               		   return false;              	   }                  }              } while (t.kind == GT || t.kind == SPACE || t.kind == TAB);      } while(t.kind == EOL);                    return (t.kind != EOF) && (t.beginColumn > ((currentBlockLevel * 4) - 2));    }    return false;  }  private boolean headingAhead(int offset) {    if (getToken(offset).kind == EQ) {      int heading = 1;      for(int i=(offset + 1);;i++) {        if(getToken(i).kind != EQ) { return true; }        if(++heading > 6) { return false;}      }    }     return false;  }	private boolean listItemAhead(boolean ordered) {      if(getToken(1).kind == EOL) {        for(int i=2, eol=1;;i++) {        Token t = getToken(i);                if(t.kind == EOL && ++eol > 2) {                return false;        } else if(t.kind != SPACE && t.kind != TAB && t.kind != EOL){            if(ordered) {	              return (t.kind == DIGITS && getToken(i+1).kind == DOT);	          }	          return (t.kind == DASH);        }    }      }  return false;}  private boolean textAhead() {    int i = skip(1, SPACE, TAB);    if(getToken(i).kind == EOL && getToken(i+1).kind != EOL && getToken(i+1).kind != EOF) {      i = skip(i+1, SPACE, TAB);          i = skip(i, SPACE, TAB, GT);          return getToken(i).kind != EOL      	    && getToken(i).kind != DASH          	&& !(getToken(i).kind == DIGITS && getToken(i+1).kind == DOT)          	&& !(getToken(i).kind == BACKTICK && getToken(i+1).kind == BACKTICK && getToken(i+2).kind == BACKTICK)      		&& !headingAhead(i);         }    return false;  }  private boolean nextAfterSpace(Integer... tokens) {    int i = skip(1, SPACE, TAB);    return Arrays.asList(tokens).contains(getToken(i).kind);  }  private int skip(int offset, Integer... tokens) {    for(int i=offset;;i++) {      Token t = getToken(i);      if(t.kind == EOF || !Arrays.asList(tokens).contains(t.kind)) { return i; }    }  }}
 PARSER_END(Koara)
 
-TOKEN : {
-    <IMAGE_LABEL : "image:" >
-  | <ESCAPED_CHAR : "\\" ["*", "`", "\\", "-", "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_"] >
-  | <ASTERISK : "*">
-  | <BACKTICK: "`">
-  | <BACKSLASH: "\\">
-  | <CHAR_SEQUENCE: (~["*", "`", "\\", "-",  "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_", " ", "\t", "\r", "\n"])+>
-  | <DASH: "-">
-  | <DIGITS : (["0"-"9"])+>
-  | <DOT: ".">
-  | <EOL : (" " | "\t")* ("\r"|"\n"|"\r\n")>
-  | <EQ: "=">
-  | <GT: ">">
-  | <LBRACK: "[">
-  | <LPAREN: "(">
-  | <LT: "<">
-  | <RBRACK: "]">
-  | <RPAREN: ")">
-  | <SPACE: " ">
-  | <TAB: "\t">
-  | <UNDERSCORE: "_">
-}
+TOKEN : {    <ASTERISK : "*">  | <BACKSLASH: "\\">  | <BACKTICK: "`">  | <CHAR_SEQUENCE: (~["*", "\\", "`", ":", "-", "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_", " ", "\t", "\r", "\n"])+>  | <COLON : ":">  | <DASH: "-">  | <DIGITS : (["0"-"9"])+>  | <DOT: ".">  | <EOL : (" " | "\t")* ("\r"|"\n"|"\r\n")>  | <EQ: "=">  | <ESCAPED_CHAR : "\\" ["*", "\\", "`", ":", "-", "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_"] >  | <GT: ">">  | <IMAGE_LABEL : "image:" >  | <LBRACK: "[">  | <LPAREN: "(">  | <LT: "<">  | <RBRACK: "]">  | <RPAREN: ")">  | <SPACE: " ">  | <TAB: "\t">  | <UNDERSCORE: "_">}
 
 ASTDocument Document()           : {/*@bgen(jjtree) Document */
   ASTDocument jjtn000 = new ASTDocument(JJTDOCUMENT);
@@ -71,7 +50,7 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
                            jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t; int heading=0;} {/*@bgen(jjtree) Heading */
   try {
-/*@egen*/  (LOOKAHEAD(1) <EQ> {heading++;})+ WhiteSpace()  (    Text()    | LooseChar()  )*/*@bgen(jjtree)*/
+/*@egen*/  (LOOKAHEAD(1) <EQ> {heading++;})+ WhiteSpace()  (    Text()    | LOOKAHEAD(Link()) Link()    | LooseChar()  )*/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;
@@ -244,9 +223,57 @@ void Paragraph()            : {/*@bgen(jjtree) Paragraph */
 
 void Inline() : {} {
   (
-      Text()    | LooseChar()
+      Text()    | LOOKAHEAD(Link()) Link()    | LooseChar()
   )+
-}
+}void Link()       : {/*@bgen(jjtree) Link */
+                     ASTLink jjtn000 = new ASTLink(JJTLINK);
+                     boolean jjtc000 = true;
+                     jjtree.openNodeScope(jjtn000);
+/*@egen*/String ref = "";} {/*@bgen(jjtree) Link */
+  try {
+/*@egen*/  <LBRACK> WhiteSpace() (ResourceText() | LooseChar())+ WhiteSpace() <RBRACK> [ LOOKAHEAD(ResourceUrl()) (ref = ResourceUrl()) ]/*@bgen(jjtree)*/
+  {
+    jjtree.closeNodeScope(jjtn000, true);
+    jjtc000 = false;
+  }
+/*@egen*/  { jjtn000.jjtSetValue(ref); }/*@bgen(jjtree)*/
+  } catch (Throwable jjte000) {
+    if (jjtc000) {
+      jjtree.clearNodeScope(jjtn000);
+      jjtc000 = false;
+    } else {
+      jjtree.popNode();
+    }
+    if (jjte000 instanceof RuntimeException) {
+      throw (RuntimeException)jjte000;
+    }
+    if (jjte000 instanceof ParseException) {
+      throw (ParseException)jjte000;
+    }
+    throw (Error)jjte000;
+  } finally {
+    if (jjtc000) {
+      jjtree.closeNodeScope(jjtn000, true);
+    }
+  }
+/*@egen*/}void ResourceText()       : {/*@bgen(jjtree) Text */
+                             ASTText jjtn000 = new ASTText(JJTTEXT);
+                             boolean jjtc000 = true;
+                             jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t; StringBuilder s = new StringBuilder();} {/*@bgen(jjtree) Text */
+  try {
+/*@egen*/  (LOOKAHEAD(2) (      t = <BACKSLASH> 					{ s.append(t.image); }    | t = <COLON>						{ s.append(t.image); }    | t = <CHAR_SEQUENCE>				{ s.append(t.image); }    | t = <DASH>						{ s.append(t.image); }    | t = <DIGITS>						{ s.append(t.image); }    | t = <DOT>							{ s.append(t.image); }    | t = <EQ>							{ s.append(t.image); }    | t = <ESCAPED_CHAR> 				{ s.append(t.image.substring(1)); }	| t = <IMAGE_LABEL>					{ s.append(t.image); }	| t = <GT>							{ s.append(t.image); }    | t = <LPAREN>						{ s.append(t.image); }    | t = <LT>							{ s.append(t.image); }    | t = <RPAREN>						{ s.append(t.image); }    | LOOKAHEAD({!nextAfterSpace(RBRACK)})     	(   t = <SPACE> 			{ s.append(t.image); }    	  | t = <TAB> 				{ s.append("    "); }    	)  	)  )+/*@bgen(jjtree)*/
+  {
+    jjtree.closeNodeScope(jjtn000, true);
+    jjtc000 = false;
+  }
+/*@egen*/  { jjtn000.jjtSetValue(s.toString()); }/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc000) {
+      jjtree.closeNodeScope(jjtn000, true);
+    }
+  }
+/*@egen*/}String ResourceUrl() : {String ref = "";} {  <LPAREN> WhiteSpace() ref = ResourceUrlText() WhiteSpace() <RPAREN>  { return ref; }}String ResourceUrlText() : {Token t; StringBuilder s = new StringBuilder();} {  ( 		t = <ASTERISK> 								{ s.append(t.image); }      | t = <BACKSLASH> 							{ s.append(t.image); }      | t = <BACKTICK> 								{ s.append(t.image); }      | t = <CHAR_SEQUENCE> 						{ s.append(t.image); }      | t = <COLON>									{ s.append(t.image); }      | t = <DASH> 									{ s.append(t.image); }      | t = <DIGITS> 								{ s.append(t.image); }      | t = <DOT> 									{ s.append(t.image); }      | t = <EQ>									{ s.append(t.image); }      | t = <ESCAPED_CHAR> 							{ s.append(t.image.substring(1)); }      | t = <IMAGE_LABEL>							{ s.append(t.image); }      | t = <GT>									{ s.append(t.image); }      | t = <LBRACK> 								{ s.append(t.image); }      | t = <LPAREN> 								{ s.append(t.image); }	  | t = <LT>									{ s.append(t.image); }      | t = <RBRACK> 								{ s.append(t.image); }      | t = <UNDERSCORE> 							{ s.append(t.image); }      | LOOKAHEAD({!nextAfterSpace(RPAREN)}) (			t = <SPACE> 							{ s.append(t.image); }	  	  | t = <TAB> 								{ s.append("    "); }	    )  )*  { return s.toString(); }}
 
 void Text()       : {/*@bgen(jjtree) Text */
                      ASTText jjtn000 = new ASTText(JJTTEXT);
@@ -256,7 +283,7 @@ void Text()       : {/*@bgen(jjtree) Text */
   try {
 /*@egen*/
   (LOOKAHEAD(1) (   		t = <BACKSLASH>								{ s.append(t.image);}
-      | t = <CHAR_SEQUENCE> 						{ s.append(t.image);}      | t = <DASH> 									{ s.append(t.image);}      | t = <DIGITS> 								{ s.append(t.image);}      | t = <DOT>									{ s.append(t.image);}      | t = <EQ>									{ s.append(t.image);}      | t = <ESCAPED_CHAR> 							{ s.append(t.image.substring(1)); }      | t = <GT>									{ s.append(t.image);}      | t = <LPAREN>								{ s.append(t.image);}      | t = <LT>									{ s.append(t.image);}      | t = <RBRACK>								{ s.append(t.image);}      | t = <RPAREN>								{ s.append(t.image);}      | LOOKAHEAD({!nextAfterSpace(EOL, EOF)}) (				t = <SPACE> 						{ s.append(t.image); }		  	  | t = <TAB> 							{ s.append("    "); }	  )
+      | t = <CHAR_SEQUENCE> 						{ s.append(t.image);}      | t = <COLON>									{ s.append(t.image); }      | t = <DASH> 									{ s.append(t.image);}      | t = <DIGITS> 								{ s.append(t.image);}      | t = <DOT>									{ s.append(t.image);}      | t = <EQ>									{ s.append(t.image);}      | t = <ESCAPED_CHAR> 							{ s.append(t.image.substring(1)); }      | t = <GT>									{ s.append(t.image);}      | t = <IMAGE_LABEL> 							{ s.append(t.image); }      | t = <LPAREN>								{ s.append(t.image);}      | t = <LT>									{ s.append(t.image);}      | t = <RBRACK>								{ s.append(t.image);}      | t = <RPAREN>								{ s.append(t.image);}      | LOOKAHEAD({!nextAfterSpace(EOL, EOF)}) (				t = <SPACE> 						{ s.append(t.image); }		  	  | t = <TAB> 							{ s.append("    "); }	  )
     )  )+/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);

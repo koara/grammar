@@ -11,45 +11,47 @@ public interface KoaraConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int IMAGE_LABEL = 1;
+  int ASTERISK = 1;
   /** RegularExpression Id. */
-  int ESCAPED_CHAR = 2;
+  int BACKSLASH = 2;
   /** RegularExpression Id. */
-  int ASTERISK = 3;
+  int BACKTICK = 3;
   /** RegularExpression Id. */
-  int BACKTICK = 4;
+  int CHAR_SEQUENCE = 4;
   /** RegularExpression Id. */
-  int BACKSLASH = 5;
+  int COLON = 5;
   /** RegularExpression Id. */
-  int CHAR_SEQUENCE = 6;
+  int DASH = 6;
   /** RegularExpression Id. */
-  int DASH = 7;
+  int DIGITS = 7;
   /** RegularExpression Id. */
-  int DIGITS = 8;
+  int DOT = 8;
   /** RegularExpression Id. */
-  int DOT = 9;
+  int EOL = 9;
   /** RegularExpression Id. */
-  int EOL = 10;
+  int EQ = 10;
   /** RegularExpression Id. */
-  int EQ = 11;
+  int ESCAPED_CHAR = 11;
   /** RegularExpression Id. */
   int GT = 12;
   /** RegularExpression Id. */
-  int LBRACK = 13;
+  int IMAGE_LABEL = 13;
   /** RegularExpression Id. */
-  int LPAREN = 14;
+  int LBRACK = 14;
   /** RegularExpression Id. */
-  int LT = 15;
+  int LPAREN = 15;
   /** RegularExpression Id. */
-  int RBRACK = 16;
+  int LT = 16;
   /** RegularExpression Id. */
-  int RPAREN = 17;
+  int RBRACK = 17;
   /** RegularExpression Id. */
-  int SPACE = 18;
+  int RPAREN = 18;
   /** RegularExpression Id. */
-  int TAB = 19;
+  int SPACE = 19;
   /** RegularExpression Id. */
-  int UNDERSCORE = 20;
+  int TAB = 20;
+  /** RegularExpression Id. */
+  int UNDERSCORE = 21;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -57,18 +59,19 @@ public interface KoaraConstants {
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
-    "\"image:\"",
-    "<ESCAPED_CHAR>",
     "\"*\"",
-    "\"`\"",
     "\"\\\\\"",
+    "\"`\"",
     "<CHAR_SEQUENCE>",
+    "\":\"",
     "\"-\"",
     "<DIGITS>",
     "\".\"",
     "<EOL>",
     "\"=\"",
+    "<ESCAPED_CHAR>",
     "\">\"",
+    "\"image:\"",
     "\"[\"",
     "\"(\"",
     "\"<\"",
