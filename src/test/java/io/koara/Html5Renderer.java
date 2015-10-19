@@ -25,6 +25,18 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTBlockquote node, Object data) {
+		out.append(indent() + "<blockquote>");
+		if(node.children != null && node.children.length > 0) { out.append("\n"); }
+		level++;
+		super.visit(node, data);
+		level--;
+		out.append(indent() + "</blockquote>\n");
+		if(!node.isNested()) { out.append("\n"); }
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTList node, Object data) {
 		listSequence.push(0);
 		String tag = node.isOrdered() ? "ol" : "ul";

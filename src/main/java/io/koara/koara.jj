@@ -6,7 +6,7 @@ package io.koara;
 public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants/*@egen*/ {/*@bgen(jjtree)*/
   protected JJTKoaraState jjtree = new JJTKoaraState();
 
-/*@egen*/	private int currentBlockLevel = 0;  private boolean blockAhead() {    if(getToken(1).kind == EOL) {      Token t;      int i = 2;      int eol = 0;              do {              do {             t = getToken(i++);                 if(t.kind == EOL && currentBlockLevel > 0 && ++eol > 2) { return false; }                 if(t.kind == GT) {               	   if(t.beginColumn == 1 && currentBlockLevel > 0)  {               		   return false;              	   }                  }              } while (t.kind == GT || t.kind == SPACE || t.kind == TAB);      } while(t.kind == EOL);                    return (t.kind != EOF) && (t.beginColumn > ((currentBlockLevel * 4) - 2));    }    return false;  }  private boolean headingAhead(int offset) {    if (getToken(offset).kind == EQ) {      int heading = 1;      for(int i=(offset + 1);;i++) {        if(getToken(i).kind != EQ) { return true; }        if(++heading > 6) { return false;}      }    }     return false;  }	private boolean listItemAhead(boolean ordered) {      if(getToken(1).kind == EOL) {        for(int i=2, eol=1;;i++) {        Token t = getToken(i);                if(t.kind == EOL && ++eol > 2) {                return false;        } else if(t.kind != SPACE && t.kind != TAB && t.kind != EOL){            if(ordered) {	              return (t.kind == DIGITS && getToken(i+1).kind == DOT);	          }	          return (t.kind == DASH);        }    }      }  return false;} 	private boolean multilineAhead(Integer token) {        if(getToken(1).kind == token && getToken(2).kind != token && getToken(2).kind != EOL) {      	for(int i=2;;i++) {            Token t = getToken(i);            if(t.kind == token) {                          return true;            } else if(t.kind == EOL) {                i = skip(i+1, SPACE, TAB);                              i = skip(i, SPACE, TAB);                if(getToken(i).kind == token              		  || getToken(i).kind == EOL                        || getToken(i).kind == DASH                        || (getToken(i).kind == DIGITS && getToken(i+1).kind == DOT)                        || headingAhead(i)) {              	  return false;                }                                   } else if(t.kind == EOF) {              return false;            }          }        }        return false;      }  private boolean textAhead() {    int i = skip(1, SPACE, TAB);    if(getToken(i).kind == EOL && getToken(i+1).kind != EOL && getToken(i+1).kind != EOF) {      i = skip(i+1, SPACE, TAB);          i = skip(i, SPACE, TAB, GT);          return getToken(i).kind != EOL      	    && getToken(i).kind != DASH          	&& !(getToken(i).kind == DIGITS && getToken(i+1).kind == DOT)      		&& !headingAhead(i);         }    return false;  }  private boolean nextAfterSpace(Integer... tokens) {    int i = skip(1, SPACE, TAB);    return Arrays.asList(tokens).contains(getToken(i).kind);  }  private int skip(int offset, Integer... tokens) {    for(int i=offset;;i++) {      Token t = getToken(i);      if(t.kind == EOF || !Arrays.asList(tokens).contains(t.kind)) { return i; }    }  }}
+/*@egen*/  private int currentBlockLevel = 0;  private int currentQuoteLevel = 0;  private boolean blockAhead() {    if(getToken(1).kind == EOL) {      Token t;      int i = 2;      int eol = 0;              int quoteLevel;              do {                  quoteLevel = 0;              do {             t = getToken(i++);                 if(t.kind == EOL && currentBlockLevel > 0 && ++eol > 2) { return false; }                 if(t.kind == GT) {               	   if(t.beginColumn == 1 && currentBlockLevel > 0 && currentQuoteLevel == 0)  {               		   return false;              	   }              	   quoteLevel++;                   }              } while (t.kind == GT || t.kind == SPACE || t.kind == TAB);                           if(quoteLevel > currentQuoteLevel) { return true; } //          if(quoteLevel < currentQuoteLevel) { return false; }      } while(t.kind == EOL);                    return (t.kind != EOF) && ((quoteLevel > 0 && quoteLevel ==  currentQuoteLevel) || (t.beginColumn > ((currentBlockLevel * 4) - 2)));    }    return false;  }  private boolean headingAhead(int offset) {    if (getToken(offset).kind == EQ) {      int heading = 1;      for(int i=(offset + 1);;i++) {        if(getToken(i).kind != EQ) { return true; }        if(++heading > 6) { return false;}      }    }     return false;  }	private boolean listItemAhead(boolean ordered) {      if(getToken(1).kind == EOL) {        for(int i=2, eol=1;;i++) {        Token t = getToken(i);                if(t.kind == EOL && ++eol > 2) {                return false;        } else if(t.kind != SPACE && t.kind != TAB && t.kind != EOL){      	  if(currentQuoteLevel > 0) {return false;}            if(ordered) {	              return (t.kind == DIGITS && getToken(i+1).kind == DOT);	          }	          return (t.kind == DASH);        }    }      }  return false;}  private boolean multilineAhead(Integer token) {    if(getToken(1).kind == token && getToken(2).kind != token && getToken(2).kind != EOL) {  	for(int i=2;;i++) {        Token t = getToken(i);        if(t.kind == token) {                      return true;        } else if(t.kind == EOL) {                        i = skip(i+1, SPACE, TAB);                        int quoteLevel = newQuoteLevel(i);                    if(quoteLevel == currentQuoteLevel) {                        i = skip(i, SPACE, TAB, GT);                        if(getToken(i).kind == token                      		  || getToken(i).kind == EOL                                || getToken(i).kind == DASH                                || (getToken(i).kind == DIGITS && getToken(i+1).kind == DOT)                                || headingAhead(i)) {                      	  return false;                        }                    } else {                  	  return false;                    }        } else if(t.kind == EOF) {          return false;        }      }    }    return false;  }  private boolean textAhead() {    int i = skip(1, SPACE, TAB);    if(getToken(i).kind == EOL && getToken(i+1).kind != EOL && getToken(i+1).kind != EOF) {      i = skip(i+1, SPACE, TAB);      int quoteLevel = newQuoteLevel(i);      if(quoteLevel == currentQuoteLevel) {          i = skip(i, SPACE, TAB, GT);          return getToken(i).kind != EOL      	    && getToken(i).kind != DASH          	&& !(getToken(i).kind == DIGITS && getToken(i+1).kind == DOT)      		&& !headingAhead(i);     }    }    return false;  }  private boolean nextAfterSpace(Integer... tokens) {    int i = skip(1, SPACE, TAB);    return Arrays.asList(tokens).contains(getToken(i).kind);  }  private int newQuoteLevel(int offset) {	  int quoteLevel = 0;	  for(int i=offset;;i++) {		  Token t = getToken(i);		  if(t.kind == GT) { 			  quoteLevel++;	      } else if(t.kind != SPACE && t.kind != TAB) { 	    	  return quoteLevel;	      }		 	  }  }  private int skip(int offset, Integer... tokens) {    for(int i=offset;;i++) {      Token t = getToken(i);      if(t.kind == EOF || !Arrays.asList(tokens).contains(t.kind)) { return i; }    }  }}
 PARSER_END(Koara)
 
 TOKEN : {    <ASTERISK : "*">  | <BACKSLASH: "\\">  | <BACKTICK: "`">  | <CHAR_SEQUENCE: (~["*", "\\", "`", ":", "-", "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_", " ", "\t", "\r", "\n"])+>  | <COLON : ":">  | <DASH: "-">  | <DIGITS : (["0"-"9"])+>  | <DOT: ".">  | <EOL : (" " | "\t")* ("\r"|"\n"|"\r\n")>  | <EQ: "=">  | <ESCAPED_CHAR : "\\" ["*", "\\", "`", ":", "-", "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_"] >  | <GT: ">">  | <IMAGE_LABEL : "image:" >  | <LBRACK: "[">  | <LPAREN: "(">  | <LT: "<">  | <RBRACK: "]">  | <RPAREN: ")">  | <SPACE: " ">  | <TAB: "\t">  | <UNDERSCORE: "_">}
@@ -44,7 +44,7 @@ ASTDocument Document()           : {/*@bgen(jjtree) Document */
   }
 /*@egen*/}
 
-void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1)}) Heading()   | LOOKAHEAD(1) UnorderedList()   | LOOKAHEAD(2) OrderedList()   | Paragraph() )  { currentBlockLevel--; }}void Heading()          : {/*@bgen(jjtree) Heading */
+void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1)}) Heading()   | LOOKAHEAD(1) Blockquote()   | LOOKAHEAD(1) UnorderedList()   | LOOKAHEAD(2) OrderedList()   | Paragraph() )  { currentBlockLevel--; }}void Heading()          : {/*@bgen(jjtree) Heading */
                            ASTHeading jjtn000 = new ASTHeading(JJTHEADING);
                            boolean jjtc000 = true;
                            jjtree.openNodeScope(jjtn000);
@@ -75,7 +75,38 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
       jjtree.closeNodeScope(jjtn000, true);
     }
   }
-/*@egen*/}void UnorderedList()       : {/*@bgen(jjtree) List */
+/*@egen*/}void Blockquote()             : {/*@bgen(jjtree) Blockquote */
+                                  ASTBlockquote jjtn000 = new ASTBlockquote(JJTBLOCKQUOTE);
+                                  boolean jjtc000 = true;
+                                  jjtree.openNodeScope(jjtn000);
+/*@egen*/ currentQuoteLevel++; } {/*@bgen(jjtree) Blockquote */
+  try {
+/*@egen*/  <GT> (LOOKAHEAD(BlockquoteEmptyLine() ) BlockquoteEmptyLine())* WhiteSpace()  [ BlockElement()    (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace() BlockquotePrefix())+ BlockElement())*  ]  (LOOKAHEAD(BlockquoteEmptyLine() <EOL>) BlockquoteEmptyLine())*/*@bgen(jjtree)*/
+  {
+    jjtree.closeNodeScope(jjtn000, true);
+    jjtc000 = false;
+  }
+/*@egen*/  { currentQuoteLevel--; }/*@bgen(jjtree)*/
+  } catch (Throwable jjte000) {
+    if (jjtc000) {
+      jjtree.clearNodeScope(jjtn000);
+      jjtc000 = false;
+    } else {
+      jjtree.popNode();
+    }
+    if (jjte000 instanceof RuntimeException) {
+      throw (RuntimeException)jjte000;
+    }
+    if (jjte000 instanceof ParseException) {
+      throw (ParseException)jjte000;
+    }
+    throw (Error)jjte000;
+  } finally {
+    if (jjtc000) {
+      jjtree.closeNodeScope(jjtn000, true);
+    }
+  }
+/*@egen*/}void BlockquotePrefix() : {int i=0;} {  (LOOKAHEAD({++i < currentQuoteLevel}) <GT> WhiteSpace())+}void BlockquoteEmptyLine() : {} {  <EOL> WhiteSpace() (LOOKAHEAD(1) <GT> WhiteSpace())+ }void UnorderedList()       : {/*@bgen(jjtree) List */
   ASTList jjtn000 = new ASTList(JJTLIST);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
@@ -107,7 +138,7 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) ListItem */
   try {
-/*@egen*/  <DASH> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace())+ BlockElement())* ]/*@bgen(jjtree)*/
+/*@egen*/  <DASH> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace() [ LOOKAHEAD({currentQuoteLevel > 0}) BlockquotePrefix() ] )+ BlockElement())* ]/*@bgen(jjtree)*/
   } catch (Throwable jjte000) {
     if (jjtc000) {
       jjtree.clearNodeScope(jjtn000);
@@ -164,7 +195,7 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
                                     jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t;} {/*@bgen(jjtree) ListItem */
   try {
-/*@egen*/  (t = <DIGITS>) <DOT> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace())+ BlockElement())* ]/*@bgen(jjtree)*/
+/*@egen*/  (t = <DIGITS>) <DOT> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace() [ LOOKAHEAD({currentQuoteLevel > 0}) BlockquotePrefix() ] )+ BlockElement())* ]/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;
@@ -197,8 +228,7 @@ void Paragraph()            : {/*@bgen(jjtree) Paragraph */
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) Paragraph */
   try {
-/*@egen*/
-  Inline() (LOOKAHEAD({textAhead()}) LineBreak() WhiteSpace() Inline())*/*@bgen(jjtree)*/
+/*@egen*/  Inline() (LOOKAHEAD({textAhead()}) LineBreak() WhiteSpace() (LOOKAHEAD(1) <GT> WhiteSpace())* Inline())*/*@bgen(jjtree)*/
   } catch (Throwable jjte000) {
     if (jjtc000) {
       jjtree.clearNodeScope(jjtn000);
@@ -218,8 +248,7 @@ void Paragraph()            : {/*@bgen(jjtree) Paragraph */
       jjtree.closeNodeScope(jjtn000, true);
     }
   }
-/*@egen*/
-}
+/*@egen*/}
 
 void Inline() : {} {
   (

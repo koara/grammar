@@ -6,21 +6,23 @@ public interface KoaraTreeConstants
   public int JJTDOCUMENT = 0;
   public int JJTVOID = 1;
   public int JJTHEADING = 2;
-  public int JJTLIST = 3;
-  public int JJTLISTITEM = 4;
-  public int JJTPARAGRAPH = 5;
-  public int JJTIMAGE = 6;
-  public int JJTLINK = 7;
-  public int JJTTEXT = 8;
-  public int JJTSTRONG = 9;
-  public int JJTEM = 10;
-  public int JJTLINEBREAK = 11;
+  public int JJTBLOCKQUOTE = 3;
+  public int JJTLIST = 4;
+  public int JJTLISTITEM = 5;
+  public int JJTPARAGRAPH = 6;
+  public int JJTIMAGE = 7;
+  public int JJTLINK = 8;
+  public int JJTTEXT = 9;
+  public int JJTSTRONG = 10;
+  public int JJTEM = 11;
+  public int JJTLINEBREAK = 12;
 
 
   public String[] jjtNodeName = {
     "Document",
     "void",
     "Heading",
+    "Blockquote",
     "List",
     "ListItem",
     "Paragraph",
@@ -32,4 +34,4 @@ public interface KoaraTreeConstants
     "LineBreak",
   };
 }
-/* JavaCC - OriginalChecksum=6e4287fcf5df0328c606f1e6fd3431c7 (do not edit this line) */
+/* JavaCC - OriginalChecksum=0f83eb434cb0eee0571f83280a6f42e4 (do not edit this line) */
