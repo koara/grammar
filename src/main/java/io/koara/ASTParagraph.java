@@ -3,15 +3,10 @@
 package io.koara;
 
 public
-class ASTParagraph extends SimpleNode {
+class ASTParagraph extends ASTBlockElement {
   public ASTParagraph(int id) {
     super(id);
   }
-
-  public ASTParagraph(Koara p, int id) {
-    super(p, id);
-  }
-
 
   /** Accept the visitor. **/
   public Object jjtAccept(KoaraVisitor visitor, Object data) {

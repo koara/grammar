@@ -5,17 +5,23 @@ public interface KoaraTreeConstants
 {
   public int JJTDOCUMENT = 0;
   public int JJTVOID = 1;
-  public int JJTPARAGRAPH = 2;
-  public int JJTTEXT = 3;
-  public int JJTLINEBREAK = 4;
+  public int JJTHEADING = 2;
+  public int JJTLIST = 3;
+  public int JJTLISTITEM = 4;
+  public int JJTPARAGRAPH = 5;
+  public int JJTTEXT = 6;
+  public int JJTLINEBREAK = 7;
 
 
   public String[] jjtNodeName = {
     "Document",
     "void",
+    "Heading",
+    "List",
+    "ListItem",
     "Paragraph",
     "Text",
     "LineBreak",
   };
 }
-/* JavaCC - OriginalChecksum=7a7a44bd155029d5bf935af6a5b61b55 (do not edit this line) */
+/* JavaCC - OriginalChecksum=7b79de1862dcaddb70ae3390b5840a50 (do not edit this line) */

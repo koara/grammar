@@ -5,8 +5,11 @@ public interface KoaraVisitor
 {
   public Object visit(SimpleNode node, Object data);
   public Object visit(ASTDocument node, Object data);
+  public Object visit(ASTHeading node, Object data);
+  public Object visit(ASTList node, Object data);
+  public Object visit(ASTListItem node, Object data);
   public Object visit(ASTParagraph node, Object data);
   public Object visit(ASTText node, Object data);
   public Object visit(ASTLineBreak node, Object data);
 }
-/* JavaCC - OriginalChecksum=fabed19df97803d62ba721f097e0cf94 (do not edit this line) */
+/* JavaCC - OriginalChecksum=9e462b022d37ecf1e454b2fd12bc2927 (do not edit this line) */

@@ -1,13 +1,13 @@
-options {  BUILD_NODE_FILES = true;  MULTI = true;  NODE_DEFAULT_VOID = true;  STATIC=false;  UNICODE_INPUT = true;  VISITOR=true;}
+options {  BUILD_NODE_FILES = false;  IGNORE_CASE=true;  MULTI = true;  NODE_DEFAULT_VOID = true;  STATIC = false;  UNICODE_INPUT = true;  VISITOR=true;}
 PARSER_BEGIN(Koara)
-  package io.koara;
-  import java.util.Arrays;
-  public class Koara {      private boolean blockAhead() {	    if(getToken(1).kind == EOL) {	      Token t;	      int i = 2;	        do {	          do {	            t = getToken(i++);	          } while (t.kind == SPACE || t.kind == TAB);	        } while(t.kind == EOL);      	        return (t.kind != EOF);	      }	      return false;	  }	  private boolean nextAfterSpace(Integer... tokens) {	      int i = skip(1, SPACE, TAB);	      return Arrays.asList(tokens).contains(getToken(i).kind);	  }	  private int skip(int offset, Integer... tokens) {	      for(int i=offset;;i++) {	        Token t = getToken(i);	        if(t.kind == EOF || !Arrays.asList(tokens).contains(t.kind)) { return i; }	      }	  }	  private boolean textAhead() {	    int i = skip(1, SPACE, TAB);	    if(getToken(i).kind == EOL && getToken(i+1).kind != EOL && getToken(i+1).kind != EOF) {	       return true;	    }	    return false;	  }      }
+package io.koara;
+import java.util.Arrays;
+public class Koara {	private int currentBlockLevel = 0;  private boolean blockAhead() {    if(getToken(1).kind == EOL) {      Token t;      int i = 2;      int eol = 0;              do {              do {             t = getToken(i++);                 if(t.kind == EOL && currentBlockLevel > 0 && ++eol > 2) { return false; }                 if(t.kind == GT) {               	   if(t.beginColumn == 1 && currentBlockLevel > 0)  {               		   return false;              	   }                  }              } while (t.kind == GT || t.kind == SPACE || t.kind == TAB);      } while(t.kind == EOL);                    return (t.kind != EOF) && (t.beginColumn > ((currentBlockLevel * 4) - 2));    }    return false;  }  private boolean headingAhead(int offset) {    if (getToken(offset).kind == EQ) {      int heading = 1;      for(int i=(offset + 1);;i++) {        if(getToken(i).kind != EQ) { return true; }        if(++heading > 6) { return false;}      }    }     return false;  }	private boolean listItemAhead(boolean ordered) {      if(getToken(1).kind == EOL) {        for(int i=2, eol=1;;i++) {        Token t = getToken(i);                if(t.kind == EOL && ++eol > 2) {                return false;        } else if(t.kind != SPACE && t.kind != TAB && t.kind != EOL){            if(ordered) {	              return (t.kind == DIGITS && getToken(i+1).kind == DOT);	          }	          return (t.kind == DASH);        }    }      }  return false;}  private boolean textAhead() {    int i = skip(1, SPACE, TAB);    if(getToken(i).kind == EOL && getToken(i+1).kind != EOL && getToken(i+1).kind != EOF) {      i = skip(i+1, SPACE, TAB);          i = skip(i, SPACE, TAB, GT);          return getToken(i).kind != EOL      	    && getToken(i).kind != DASH          	&& !(getToken(i).kind == DIGITS && getToken(i+1).kind == DOT)          	&& !(getToken(i).kind == BACKTICK && getToken(i+1).kind == BACKTICK && getToken(i+2).kind == BACKTICK)      		&& !headingAhead(i);         }    return false;  }  private boolean nextAfterSpace(Integer... tokens) {    int i = skip(1, SPACE, TAB);    return Arrays.asList(tokens).contains(getToken(i).kind);  }  private int skip(int offset, Integer... tokens) {    for(int i=offset;;i++) {      Token t = getToken(i);      if(t.kind == EOF || !Arrays.asList(tokens).contains(t.kind)) { return i; }    }  }}
 PARSER_END(Koara)
 
 TOKEN : {
     <IMAGE_LABEL : "image:" >
-  | <ESCAPED_CHAR : "\\" ["*", "`", "\\", "-", ".", "=", ">", "[", "(", "<", "]", ")", "_"] >
+  | <ESCAPED_CHAR : "\\" ["*", "`", "\\", "-", "0" - "9", ".", "=", ">", "[", "(", "<", "]", ")", "_"] >
   | <ASTERISK : "*">
   | <BACKTICK: "`">
   | <BACKSLASH: "\\">
@@ -28,13 +28,9 @@ TOKEN : {
   | <UNDERSCORE: "_">
 }
 
-ASTDocument Document() #Document : {} {
-  (LOOKAHEAD(1) <EOL>)*  WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace())+ BlockElement())* (<EOL>)* WhiteSpace() ] <EOF>  { return jjtThis; }
-}
+ASTDocument Document() #Document : {} {  (LOOKAHEAD(1) <EOL>)*  WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace())+ BlockElement())* (<EOL>)* WhiteSpace() ] <EOF>  { return jjtThis; }}
 
-void BlockElement() : {} {
-  Paragraph()
-}
+void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1)}) Heading()   | LOOKAHEAD(1) UnorderedList()   | LOOKAHEAD(2) OrderedList()   | Paragraph() )  { currentBlockLevel--; }}void Heading() #Heading : {Token t; int heading=0;} {  (LOOKAHEAD(1) <EQ> {heading++;})+ WhiteSpace()  (    Text()    | LooseChar()  )*  { jjtThis.jjtSetValue(heading); }}void UnorderedList() #List : {} {  UnorderedListItem() (LOOKAHEAD({listItemAhead(false)}) (<EOL>)+ WhiteSpace() UnorderedListItem())*}void UnorderedListItem() #ListItem : {} {  <DASH> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace())+ BlockElement())* ]}void OrderedList() #List : {} {  OrderedListItem() (LOOKAHEAD({listItemAhead(true)}) (<EOL>)+ WhiteSpace() OrderedListItem())*  { jjtThis.setOrdered(true); }}void OrderedListItem() #ListItem : {Token t;} {  (t = <DIGITS>) <DOT> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead()}) (<EOL> WhiteSpace())+ BlockElement())* ]  { jjtThis.setNumber(Integer.valueOf(Integer.valueOf(t.image))); }}
 
 void Paragraph() #Paragraph : {} {
   Inline() (LOOKAHEAD({textAhead()}) LineBreak() WhiteSpace() Inline())*
