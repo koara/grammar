@@ -33,8 +33,14 @@ public class KoaraDefaultVisitor implements KoaraVisitor{
   public Object visit(ASTText node, Object data){
     return defaultVisit(node, data);
   }
+  public Object visit(ASTStrong node, Object data){
+    return defaultVisit(node, data);
+  }
+  public Object visit(ASTEm node, Object data){
+    return defaultVisit(node, data);
+  }
   public Object visit(ASTLineBreak node, Object data){
     return defaultVisit(node, data);
   }
 }
-/* JavaCC - OriginalChecksum=5f2de49e6cdfef207fc1e0051ea88a5a (do not edit this line) */
+/* JavaCC - OriginalChecksum=9f12e960ca8cb9c27b88aafabb02a7e3 (do not edit this line) */

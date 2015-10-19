@@ -71,7 +71,7 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 		}
 		return null;
 	}
-	
+		
 	@Override
 	public Object visit(ASTImage node, Object data) {
 		out.append("<img src=\"" + escapeUrl(node.value.toString()) + "\" alt=\"");
@@ -88,6 +88,21 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 		return null;
 	}
 	
+	@Override
+	public Object visit(ASTStrong node, Object data) {
+		out.append("<strong>");
+		super.visit(node, data);
+		out.append("</strong>");
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTEm node, Object data) {
+		out.append("<em>");
+		super.visit(node, data);
+		out.append("</em>");
+		return null;
+	}
 		
 	@Override
 	public Object visit(ASTText node, Object data) {

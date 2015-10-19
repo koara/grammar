@@ -12,7 +12,9 @@ public interface KoaraTreeConstants
   public int JJTIMAGE = 6;
   public int JJTLINK = 7;
   public int JJTTEXT = 8;
-  public int JJTLINEBREAK = 9;
+  public int JJTSTRONG = 9;
+  public int JJTEM = 10;
+  public int JJTLINEBREAK = 11;
 
 
   public String[] jjtNodeName = {
@@ -25,7 +27,9 @@ public interface KoaraTreeConstants
     "Image",
     "Link",
     "Text",
+    "Strong",
+    "Em",
     "LineBreak",
   };
 }
-/* JavaCC - OriginalChecksum=cd2a6f4c14832d86743bdfeab3ffa771 (do not edit this line) */
+/* JavaCC - OriginalChecksum=6e4287fcf5df0328c606f1e6fd3431c7 (do not edit this line) */

@@ -54,62 +54,122 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod4">Heading</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;EQ&gt; )+ <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod11">LooseChar</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;EQ&gt; )+ <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod11">Strong</A> | <A HREF="#prod12">Em</A> | <A HREF="#prod13">LooseChar</A> )*</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">UnorderedList</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod12">UnorderedListItem</A> ( ( &lt;EOL&gt; )+ <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod12">UnorderedListItem</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod14">UnorderedListItem</A> ( ( &lt;EOL&gt; )+ <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod14">UnorderedListItem</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod12">UnorderedListItem</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod14">UnorderedListItem</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;DASH&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> )+ <A HREF="#prod3">BlockElement</A> )* )?</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod6">OrderedList</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod13">OrderedListItem</A> ( ( &lt;EOL&gt; )+ <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod13">OrderedListItem</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod15">OrderedListItem</A> ( ( &lt;EOL&gt; )+ <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod15">OrderedListItem</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod13">OrderedListItem</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod15">OrderedListItem</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;DIGITS&gt; ) &lt;DOT&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> )+ <A HREF="#prod3">BlockElement</A> )* )?</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod7">Paragraph</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod14">Inline</A> ( <A HREF="#prod15">LineBreak</A> <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod14">Inline</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE><A HREF="#prod16">Inline</A> ( <A HREF="#prod17">LineBreak</A> <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod16">Inline</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod14">Inline</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod16">Inline</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod11">LooseChar</A> )+</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod18">StrongMultiline</A> | <A HREF="#prod19">EmMultiline</A> | <A HREF="#prod13">LooseChar</A> )+</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod9">Image</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>&lt;LBRACK&gt; <A HREF="#prod2">WhiteSpace</A> &lt;IMAGE_LABEL&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod16">ResourceText</A> | <A HREF="#prod11">LooseChar</A> )+ <A HREF="#prod2">WhiteSpace</A> &lt;RBRACK&gt; ( ( <A HREF="#prod17">ResourceUrl</A> ) )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;LBRACK&gt; <A HREF="#prod2">WhiteSpace</A> &lt;IMAGE_LABEL&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod20">ResourceText</A> | <A HREF="#prod13">LooseChar</A> )+ <A HREF="#prod2">WhiteSpace</A> &lt;RBRACK&gt; ( ( <A HREF="#prod21">ResourceUrl</A> ) )?</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod10">Link</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>&lt;LBRACK&gt; <A HREF="#prod2">WhiteSpace</A> ( ( <A HREF="#prod9">Image</A> ) | <A HREF="#prod16">ResourceText</A> | <A HREF="#prod11">LooseChar</A> )+ <A HREF="#prod2">WhiteSpace</A> &lt;RBRACK&gt; ( ( <A HREF="#prod17">ResourceUrl</A> ) )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;LBRACK&gt; <A HREF="#prod2">WhiteSpace</A> ( ( <A HREF="#prod9">Image</A> ) | <A HREF="#prod11">Strong</A> | <A HREF="#prod12">Em</A> | <A HREF="#prod20">ResourceText</A> | <A HREF="#prod13">LooseChar</A> )+ <A HREF="#prod2">WhiteSpace</A> &lt;RBRACK&gt; ( ( <A HREF="#prod21">ResourceUrl</A> ) )?</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod16">ResourceText</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod20">ResourceText</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;BACKSLASH&gt; | &lt;COLON&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;IMAGE_LABEL&gt; | &lt;GT&gt; | &lt;LPAREN&gt; | &lt;LT&gt; | &lt;RPAREN&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) ) )+</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod17">ResourceUrl</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod21">ResourceUrl</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>&lt;LPAREN&gt; <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod18">ResourceUrlText</A> <A HREF="#prod2">WhiteSpace</A> &lt;RPAREN&gt;</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;LPAREN&gt; <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod22">ResourceUrlText</A> <A HREF="#prod2">WhiteSpace</A> &lt;RPAREN&gt;</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod18">ResourceUrlText</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod22">ResourceUrlText</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;ASTERISK&gt; | &lt;BACKSLASH&gt; | &lt;BACKTICK&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;COLON&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;IMAGE_LABEL&gt; | &lt;GT&gt; | &lt;LBRACK&gt; | &lt;LPAREN&gt; | &lt;LT&gt; | &lt;RBRACK&gt; | &lt;UNDERSCORE&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) )*</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod18">StrongMultiline</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;ASTERISK&gt; <A HREF="#prod23">StrongMultilineContent</A> ( <A HREF="#prod17">LineBreak</A> <A HREF="#prod23">StrongMultilineContent</A> )* &lt;ASTERISK&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod23">StrongMultilineContent</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod24">EmWithinStrongMultiline</A> | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  | &lt;UNDERSCORE&gt;  )+</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod25">StrongWithinEmMultiline</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;ASTERISK&gt; <A HREF="#prod26">StrongWithinEmMultilineContent</A> ( <A HREF="#prod17">LineBreak</A> <A HREF="#prod26">StrongWithinEmMultilineContent</A> )* &lt;ASTERISK&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod26">StrongWithinEmMultilineContent</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  | &lt;UNDERSCORE&gt;  )+</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod11">Strong</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;ASTERISK&gt; ( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod27">EmWithinStrong</A> | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  | &lt;UNDERSCORE&gt;  )+ &lt;ASTERISK&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod28">StrongWithinEm</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;ASTERISK&gt; ( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  | &lt;UNDERSCORE&gt;  )+ &lt;ASTERISK&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod19">EmMultiline</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;UNDERSCORE&gt; <A HREF="#prod29">EmMultilineContent</A> ( <A HREF="#prod17">LineBreak</A> <A HREF="#prod29">EmMultilineContent</A> )* &lt;UNDERSCORE&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod29">EmMultilineContent</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod25">StrongWithinEmMultiline</A> | &lt;ASTERISK&gt;  | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  )+</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod24">EmWithinStrongMultiline</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;UNDERSCORE&gt; <A HREF="#prod30">EmWithinStrongMultilineContent</A> ( <A HREF="#prod17">LineBreak</A> <A HREF="#prod30">EmWithinStrongMultilineContent</A> )* &lt;UNDERSCORE&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod30">EmWithinStrongMultilineContent</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | &lt;ASTERISK&gt;  | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  )+</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod12">Em</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;UNDERSCORE&gt; ( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | <A HREF="#prod28">StrongWithinEm</A> | &lt;ASTERISK&gt;  | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  )+ &lt;UNDERSCORE&gt;</TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod27">EmWithinStrong</A></TD>
+<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;UNDERSCORE&gt; ( <A HREF="#prod8">Text</A> | <A HREF="#prod9">Image</A> | <A HREF="#prod10">Link</A> | &lt;ASTERISK&gt;  | &lt;BACKTICK&gt;  | &lt;LBRACK&gt;  )+ &lt;UNDERSCORE&gt;</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">Text</A></TD>
@@ -117,12 +177,12 @@
 <TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;BACKSLASH&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;COLON&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;GT&gt; | &lt;IMAGE_LABEL&gt; | &lt;LPAREN&gt; | &lt;LT&gt; | &lt;RBRACK&gt; | &lt;RPAREN&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) ) )+</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod11">LooseChar</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod13">LooseChar</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;ASTERISK&gt; | &lt;BACKTICK&gt; | &lt;LBRACK&gt; | &lt;UNDERSCORE&gt; )</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod15">LineBreak</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod17">LineBreak</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;SPACE&gt; | &lt;TAB&gt; )* &lt;EOL&gt;</TD>
 </TR>

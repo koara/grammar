@@ -57,6 +57,7 @@ public class ComplianceTest {
 		Html5Renderer renderer = new Html5Renderer();
 		document.jjtAccept(renderer, null);
 		assertEquals(html, renderer.getOutput());
+		
 	}
 	
 	private String readFile(Path path) throws IOException {
