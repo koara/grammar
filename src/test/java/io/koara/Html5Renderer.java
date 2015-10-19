@@ -70,6 +70,18 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 		out.append("</li>\n");
 		return null;
 	}
+	
+	@Override
+	public Object visit(ASTCodeBlock node, Object data) {
+		out.append(indent() + "<pre><code");
+		if(node.getLanguage() != null) {
+			out.append(" class=\"language-" + node.getLanguage() + "\"");
+		}
+		out.append(">");
+		out.append(escape(node.value.toString()) + "</code></pre>\n");
+		if(!node.isNested()) { out.append("\n"); }
+		return null;
+	}
 		
 	@Override
 	public Object visit(ASTParagraph node, Object data) {
@@ -113,6 +125,14 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 		out.append("<em>");
 		super.visit(node, data);
 		out.append("</em>");
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTCode node, Object data) {
+		out.append("<code>");
+		super.visit(node, data);
+		out.append("</code>");
 		return null;
 	}
 		

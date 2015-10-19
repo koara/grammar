@@ -9,13 +9,15 @@ public interface KoaraTreeConstants
   public int JJTBLOCKQUOTE = 3;
   public int JJTLIST = 4;
   public int JJTLISTITEM = 5;
-  public int JJTPARAGRAPH = 6;
-  public int JJTIMAGE = 7;
-  public int JJTLINK = 8;
-  public int JJTTEXT = 9;
-  public int JJTSTRONG = 10;
-  public int JJTEM = 11;
-  public int JJTLINEBREAK = 12;
+  public int JJTCODEBLOCK = 6;
+  public int JJTPARAGRAPH = 7;
+  public int JJTIMAGE = 8;
+  public int JJTLINK = 9;
+  public int JJTTEXT = 10;
+  public int JJTSTRONG = 11;
+  public int JJTEM = 12;
+  public int JJTCODE = 13;
+  public int JJTLINEBREAK = 14;
 
 
   public String[] jjtNodeName = {
@@ -25,13 +27,15 @@ public interface KoaraTreeConstants
     "Blockquote",
     "List",
     "ListItem",
+    "CodeBlock",
     "Paragraph",
     "Image",
     "Link",
     "Text",
     "Strong",
     "Em",
+    "Code",
     "LineBreak",
   };
 }
-/* JavaCC - OriginalChecksum=0f83eb434cb0eee0571f83280a6f42e4 (do not edit this line) */
+/* JavaCC - OriginalChecksum=21f376a3f6d21315048153abd6d6a44c (do not edit this line) */
