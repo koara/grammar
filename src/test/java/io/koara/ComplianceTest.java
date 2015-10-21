@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +19,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class ComplianceTest {
 
-	private static Path TESTSUITE_FOLDER = Paths.get("src/test/resources");
+	private static final String TESTSUITE_FOLDER = "src/test/resources";
 	
 	private String module;
 	private String testcase;
@@ -36,7 +34,7 @@ public class ComplianceTest {
 	@Parameters(name= "{0}: {1}")
 	public static Iterable<Object[]> data() {
 		List<Object[]> modules = new ArrayList<Object[]>();
-		for(File module : TESTSUITE_FOLDER.toFile().listFiles()) {
+		for(File module : new File(TESTSUITE_FOLDER).listFiles()) {
 			if(include.size() == 0 || include.contains(module.getName())) {
 				for(File testcase : module.listFiles()) {
 					if(testcase.getName().endsWith(".kd")) {
