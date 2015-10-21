@@ -36,16 +36,6 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
       return false;
     }
 
-    private boolean closingTagAhead(String tagName) {
-      for(int i=1, eol=0;;i++) {
-        Token t = getToken(i);
-                if(t.kind == LT && getToken(i+1).kind == FORWARD_SLASH) {
-                  return tagName == null || getToken(i+2).image.equals(tagName);
-                }
-        if(t.kind == EOF) { return false;}
-      }
-    }
-
     private boolean fencesAhead() {
             if(getToken(1).kind == EOL) {
               int i = skip(2, SPACE, TAB);
