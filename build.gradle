@@ -1,18 +1,4 @@
-buildscript {
-	repositories {
-	   mavenCentral()
-	}
-	dependencies {
-	   classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
-       classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
-	}
-}
-
-apply plugin: 'cobertura'
-apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'java'
-
-cobertura.coverageFormats = ['html', 'xml']
 
 compileJava {
   sourceCompatibility = 1.6
