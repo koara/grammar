@@ -75,7 +75,7 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	public Object visit(ASTCodeBlock node, Object data) {
 		out.append(indent() + "<pre><code");
 		if(node.getLanguage() != null) {
-			out.append(" class=\"language-" + node.getLanguage() + "\"");
+			out.append(" class=\"language-" + escape(node.getLanguage()) + "\"");
 		}
 		out.append(">");
 		out.append(escape(node.value.toString()) + "</code></pre>\n");

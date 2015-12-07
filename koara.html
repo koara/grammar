@@ -94,12 +94,12 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">FencedCodeBlock</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>&lt;BACKTICK&gt; &lt;BACKTICK&gt; ( &lt;BACKTICK&gt; )+ <A HREF="#prod2">WhiteSpace</A> ( ( <A HREF="#prod21">CodeLanguage</A> ) )? ( &lt;EOL&gt; <A HREF="#prod22">LevelWhiteSpace</A> )? ( &lt;ASTERISK&gt; | &lt;BACKSLASH&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;COLON&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;IMAGE_LABEL&gt; | &lt;LT&gt; | &lt;GT&gt; | &lt;LBRACK&gt; | &lt;RBRACK&gt; | &lt;LPAREN&gt; | &lt;RPAREN&gt; | &lt;UNDERSCORE&gt; | &lt;BACKTICK&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) | ( &lt;EOL&gt; <A HREF="#prod22">LevelWhiteSpace</A> ) )* ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> &lt;BACKTICK&gt; &lt;BACKTICK&gt; ( &lt;BACKTICK&gt; )+ )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;BACKTICK&gt; &lt;BACKTICK&gt; ( &lt;BACKTICK&gt; )+ <A HREF="#prod2">WhiteSpace</A> ( ( <A HREF="#prod21">CodeLanguage</A> ) )? ( &lt;EOL&gt; <A HREF="#prod22">LevelWhiteSpace</A> )? ( &lt;ASTERISK&gt; | &lt;BACKSLASH&gt; | &lt;CHAR_SEQUENCE&gt; | &lt;COLON&gt; | &lt;DASH&gt; | &lt;DIGITS&gt; | &lt;DOT&gt; | &lt;EQ&gt; | &lt;ESCAPED_CHAR&gt; | &lt;IMAGE_LABEL&gt; | &lt;LT&gt; | &lt;GT&gt; | &lt;LBRACK&gt; | &lt;RBRACK&gt; | &lt;LPAREN&gt; | &lt;RPAREN&gt; | &lt;UNDERSCORE&gt; | &lt;BACKTICK&gt; | ( &lt;SPACE&gt; | &lt;TAB&gt; ) | ( &lt;EOL&gt; <A HREF="#prod22">LevelWhiteSpace</A> ) )* ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> ( &lt;GT&gt; <A HREF="#prod2">WhiteSpace</A> )* &lt;BACKTICK&gt; &lt;BACKTICK&gt; ( &lt;BACKTICK&gt; )+ )?</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod22">LevelWhiteSpace</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( ( &lt;SPACE&gt; | &lt;TAB&gt; ) )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;GT&gt; )* ( ( &lt;SPACE&gt; | &lt;TAB&gt; ) )*</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod21">CodeLanguage</A></TD>
