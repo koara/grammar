@@ -144,6 +144,7 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
                   boolean result = getToken(i).kind != EOL
                                   && t.kind != DASH
                                   && !(t.kind == DIGITS && getToken(i+1).kind == DOT)
+                                          && !(getToken(i).kind == BACKTICK && getToken(i+1).kind == BACKTICK && getToken(i+2).kind == BACKTICK)
                                   && !headingAhead(i);
                   System.out.println("> textAhead >> " + result + " (1)");
                   return result;
