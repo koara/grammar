@@ -10,19 +10,38 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
     private int currentQuoteLevel = 0;
 
         private boolean blockAhead(int blockBeginColumn) {
+                int quoteLevel;
+
         if(getToken(1).kind == EOL) {
           Token t;
           int i = 2;
+          quoteLevel=0;
           do {
+              quoteLevel=0;
               do {
                 t = getToken(i++);
-              } while(t.kind == SPACE || t.kind == TAB);
+                if(t.kind == GT) {
+                  if(t.beginColumn == 1 && currentBlockLevel > 0 && currentQuoteLevel == 0)  {
+                   System.out.println("> blockAhead >> false (1)");
+                           return false;
+                  }
+                  quoteLevel++;
+                }
+              } while(t.kind == GT || t.kind == SPACE || t.kind == TAB);
+              if(quoteLevel > currentQuoteLevel) {
+                System.out.println("> blockAhead >> true (2)");
+                return true;
+              }
+              if(quoteLevel < currentQuoteLevel) {
+                System.out.println("> blockAhead >> false (3)");
+                return false;
+              }
           } while(t.kind == EOL);
           boolean result = t.kind != EOF && (currentBlockLevel == 0 || t.beginColumn >= blockBeginColumn + 2) ;
-          System.out.println("> blockAhead >> " + result + " (1)");
+          System.out.println("> blockAhead >> " + result + " (4)");
           return result;
         }
-        System.out.println("> blockAhead >> false (2)");
+        System.out.println("> blockAhead >> false (5)");
         return false;
     }
 
@@ -64,8 +83,17 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
     }
 
     private boolean fencesAhead() {
-      System.out.println("> fencesAhead >> false (1)");
-      return false;
+            if(getToken(1).kind == EOL) {
+              int i = skip(2, SPACE, TAB, GT);
+              if(getToken(i).kind == BACKTICK && getToken(i+1).kind == BACKTICK && getToken(i+2).kind == BACKTICK) {
+                 i = skip(i+3, SPACE, TAB);
+                 boolean result = getToken(i).kind == EOL || getToken(i).kind == EOF;
+                 System.out.println("> fencesAhead >> " + result + " (1)");
+                 return result;
+              }
+            }
+             System.out.println("> fencesAhead >> false (2)");
+            return false;
     }
 
 
@@ -88,7 +116,7 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
 
                         if(t.kind == EOL && ++eol > 2) {
                           return false;
-                        } else if(t.kind != SPACE && t.kind != TAB && t.kind != EOL) {
+                        } else if(t.kind != SPACE && t.kind != TAB && t.kind != GT && t.kind != EOL) {
                             if(ordered) {
                                 boolean result = (t.kind == DIGITS && getToken(i+1).kind == DOT && t.beginColumn >= listBeginColumn);
                                 System.out.println("> listItemAhead >> " + result + " (1)");
@@ -108,12 +136,18 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
     private boolean textAhead() {
       if(getToken(1).kind == EOL && getToken(2).kind != EOL) {
           int i = skip(2, SPACE, TAB);
-          Token t = getToken(i);
-          boolean result = t.kind != DASH
-                          && !(t.kind == DIGITS && getToken(i+1).kind == DOT)
-                          && !headingAhead(i);
-          System.out.println("> textAhead >> " + result + " (1)");
-          return result;
+                  int quoteLevel = newQuoteLevel(i);
+                        if(quoteLevel == currentQuoteLevel) {
+                          i = skip(i, SPACE, TAB, GT);
+
+                  Token t = getToken(i);
+                  boolean result = getToken(i).kind != EOL
+                                  && t.kind != DASH
+                                  && !(t.kind == DIGITS && getToken(i+1).kind == DOT)
+                                  && !headingAhead(i);
+                  System.out.println("> textAhead >> " + result + " (1)");
+                  return result;
+          }
       }
       System.out.println("> textAhead >> false (2)");
       return false;
@@ -533,6 +567,11 @@ if (jjtc000) {
           while (true) {
             jj_consume_token(EOL);
             WhiteSpace();
+            if (currentQuoteLevel > 0) {
+              BlockquotePrefix();
+            } else {
+              ;
+            }
             switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
             case EOL:{
               ;
