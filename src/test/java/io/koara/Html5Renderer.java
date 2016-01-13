@@ -25,7 +25,7 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
-	public Object visit(ASTBlockquote node, Object data) {
+	public Object visit(ASTBlockQuote node, Object data) {
 		out.append(indent() + "<blockquote>");
 		if(node.children != null && node.children.length > 0) { out.append("\n"); }
 		level++;

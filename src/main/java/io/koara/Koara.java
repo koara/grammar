@@ -272,7 +272,7 @@ if (jjtc000) {
     } else {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case GT:{
-        Blockquote();
+        BlockQuote();
         break;
         }
       case DASH:{
@@ -375,8 +375,8 @@ if (jjtc000) {
     }
   }
 
-  final public void Blockquote() throws ParseException {/*@bgen(jjtree) Blockquote */
-                                  ASTBlockquote jjtn000 = new ASTBlockquote(JJTBLOCKQUOTE);
+  final public void BlockQuote() throws ParseException {/*@bgen(jjtree) BlockQuote */
+                                  ASTBlockQuote jjtn000 = new ASTBlockQuote(JJTBLOCKQUOTE);
                                   boolean jjtc000 = true;
                                   jjtree.openNodeScope(jjtn000);currentQuoteLevel++;
     try {
@@ -388,7 +388,7 @@ if (jjtc000) {
         } else {
           break label_7;
         }
-        BlockquoteEmptyLine();
+        BlockQuoteEmptyLine();
       }
       WhiteSpace();
       if (jj_2_13(1)) {
@@ -404,7 +404,7 @@ if (jjtc000) {
           while (true) {
             jj_consume_token(EOL);
             WhiteSpace();
-            BlockquotePrefix();
+            BlockQuotePrefix();
             switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
             case EOL:{
               ;
@@ -427,7 +427,7 @@ if (jjtc000) {
         } else {
           break label_10;
         }
-        BlockquoteEmptyLine();
+        BlockQuoteEmptyLine();
       }
 jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;
@@ -453,7 +453,7 @@ if (jjtc000) {
     }
   }
 
-  final public void BlockquotePrefix() throws ParseException {int i=0;
+  final public void BlockQuotePrefix() throws ParseException {int i=0;
     label_11:
     while (true) {
       jj_consume_token(GT);
@@ -466,7 +466,7 @@ if (jjtc000) {
     }
   }
 
-  final public void BlockquoteEmptyLine() throws ParseException {
+  final public void BlockQuoteEmptyLine() throws ParseException {
     jj_consume_token(EOL);
     WhiteSpace();
     label_12:
@@ -569,7 +569,7 @@ if (jjtc000) {
             jj_consume_token(EOL);
             WhiteSpace();
             if (currentQuoteLevel > 0) {
-              BlockquotePrefix();
+              BlockQuotePrefix();
             } else {
               ;
             }
@@ -701,7 +701,7 @@ if (jjtc000) {
             jj_consume_token(EOL);
             WhiteSpace();
             if (currentQuoteLevel > 0) {
-              BlockquotePrefix();
+              BlockQuotePrefix();
             } else {
               ;
             }

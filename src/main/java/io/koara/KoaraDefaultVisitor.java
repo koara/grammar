@@ -15,7 +15,7 @@ public class KoaraDefaultVisitor implements KoaraVisitor{
   public Object visit(ASTHeading node, Object data){
     return defaultVisit(node, data);
   }
-  public Object visit(ASTBlockquote node, Object data){
+  public Object visit(ASTBlockQuote node, Object data){
     return defaultVisit(node, data);
   }
   public Object visit(ASTList node, Object data){

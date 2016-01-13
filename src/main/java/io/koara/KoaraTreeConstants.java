@@ -24,7 +24,7 @@ public interface KoaraTreeConstants
     "Document",
     "void",
     "Heading",
-    "Blockquote",
+    "BlockQuote",
     "List",
     "ListItem",
     "CodeBlock",

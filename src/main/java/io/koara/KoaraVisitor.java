@@ -6,7 +6,7 @@ public interface KoaraVisitor
   public Object visit(SimpleNode node, Object data);
   public Object visit(ASTDocument node, Object data);
   public Object visit(ASTHeading node, Object data);
-  public Object visit(ASTBlockquote node, Object data);
+  public Object visit(ASTBlockQuote node, Object data);
   public Object visit(ASTList node, Object data);
   public Object visit(ASTListItem node, Object data);
   public Object visit(ASTCodeBlock node, Object data);
