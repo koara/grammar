@@ -54,7 +54,20 @@ public class ComplianceTest {
 		Html5Renderer renderer = new Html5Renderer();
 		document.jjtAccept(renderer, null);
 		assertEquals(html, renderer.getOutput());
+	}
+	
+	@Test
+	public void testKoaraToJson() throws Exception {
+		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/" + module + "/koara/" + testcase + ".kd"));
 		
+		File f = new File(TESTSUITE_FOLDER + "/" + module + "/json/" + testcase + ".json");
+		if(f.exists()) { // Don't fail until all JSON files are available
+			String json = readFile(TESTSUITE_FOLDER + "/" + module + "/json/" + testcase + ".json");
+			ASTDocument document = koara.Document();
+			JsonRenderer renderer = new JsonRenderer();
+			document.jjtAccept(renderer, null);
+			assertEquals(json, renderer.getOutput());
+		}
 	}
 	
 	private String readFile(String path) throws IOException {
