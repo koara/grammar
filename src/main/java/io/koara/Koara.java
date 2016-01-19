@@ -83,7 +83,7 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
     }
 
     private boolean fencesAhead() {
-            if(getToken(1).kind == EOL) {
+    	    if(getToken(1).kind == EOL) {
               int i = skip(2, SPACE, TAB, GT);
               if(getToken(i).kind == BACKTICK && getToken(i+1).kind == BACKTICK && getToken(i+2).kind == BACKTICK) {
                  i = skip(i+3, SPACE, TAB);
@@ -175,7 +175,7 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
     private int skip(int offset, Integer... tokens) {
       for(int i=offset;;i++) {
         Token t = getToken(i);
-        if(t.kind == EOF || !Arrays.asList(tokens).contains(t.kind)) { return i; }
+        if(!Arrays.asList(tokens).contains(t.kind) || t.kind == EOF) { return i; }
       }
     }
 
