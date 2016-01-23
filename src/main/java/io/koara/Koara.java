@@ -83,17 +83,15 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
     }
 
     private boolean fencesAhead() {
-    	    if(getToken(1).kind == EOL) {
-              int i = skip(2, SPACE, TAB, GT);
-              if(getToken(i).kind == BACKTICK && getToken(i+1).kind == BACKTICK && getToken(i+2).kind == BACKTICK) {
-                 i = skip(i+3, SPACE, TAB);
-                 boolean result = getToken(i).kind == EOL || getToken(i).kind == EOF;
-                 System.out.println("> fencesAhead >> " + result + " (1)");
-                 return result;
-              }
-            }
-             System.out.println("> fencesAhead >> false (2)");
-            return false;
+        int i = skip(2, SPACE, TAB, GT);
+        if(getToken(i).kind == BACKTICK && getToken(i+1).kind == BACKTICK && getToken(i+2).kind == BACKTICK) {
+            i = skip(i+3, SPACE, TAB);
+            boolean result = getToken(i).kind == EOL || getToken(i).kind == EOF;
+            System.out.println("> fencesAhead >> " + result + " (1)");
+            return result;
+        }
+        System.out.println("> fencesAhead >> false (2)");
+        return false;
     }
 
 
