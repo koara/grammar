@@ -57,14 +57,14 @@ public class ComplianceTest {
 	}
 	
 	@Test
-	public void testKoaraToJson() throws Exception {
+	public void testKoaraToXml() throws Exception {
 		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/" + module + "/koara/" + testcase + ".kd"));
 		
-		File f = new File(TESTSUITE_FOLDER + "/" + module + "/json/" + testcase + ".json");
+		File f = new File(TESTSUITE_FOLDER + "/" + module + "/xml/" + testcase + ".xml");
 		if(f.exists()) { // Don't fail until all JSON files are available
-			String json = readFile(TESTSUITE_FOLDER + "/" + module + "/json/" + testcase + ".json");
+			String json = readFile(TESTSUITE_FOLDER + "/" + module + "/xml/" + testcase + ".xml");
 			ASTDocument document = koara.Document();
-			JsonRenderer renderer = new JsonRenderer();
+			XmlRenderer renderer = new XmlRenderer();
 			document.jjtAccept(renderer, null);
 			assertEquals(json, renderer.getOutput());
 		}
