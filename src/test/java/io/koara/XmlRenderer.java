@@ -18,7 +18,9 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	public Object visit(ASTParagraph node, Object data) {
 		level++;
 		out.append(indent() + "<paragraph>\n");
+		level++;
 		node.childrenAccept(this, data);
+		level--;
 		out.append(indent() + "</paragraph>\n");
 		level--;
 		return null;
@@ -26,11 +28,15 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	
 	@Override
 	public Object visit(ASTText node, Object data) {
-		level++;
 		out.append(indent() + "<text>");
 		out.append(node.value);
 		out.append("</text>\n");
-		level--;
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTLineBreak node, Object data) {
+		out.append(indent() + "<linebreak />\n");
 		return null;
 	}
 	
