@@ -8,9 +8,13 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	@Override
 	public Object visit(ASTDocument node, Object data) {
 		out = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		out.append("<document>\n");
-		node.childrenAccept(this, data);
-		out.append("</document>\n");
+		if(node.children != null && node.children.length > 0) {
+			out.append("<document>\n");
+			node.childrenAccept(this, data);
+			out.append("</document>");
+		} else {
+			out.append("<document />");
+		}
 		return null;
 	}
 	
