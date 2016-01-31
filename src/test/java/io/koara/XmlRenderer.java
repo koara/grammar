@@ -19,6 +19,25 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTHeading node, Object data) {
+		level++;
+		out.append(indent() + "<heading level=\"" + node.value + "\"");
+		if(node.children != null && node.children.length > 0) {
+			out.append(">\n");
+			level++;
+			node.childrenAccept(this, data);
+			level--;
+			out.append(indent() + "</heading>\n");
+		} else {
+			out.append(" />\n");
+		}
+		
+		
+		level--;
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTParagraph node, Object data) {
 		level++;
 		out.append(indent() + "<paragraph>\n");
@@ -33,7 +52,7 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	@Override
 	public Object visit(ASTText node, Object data) {
 		out.append(indent() + "<text>");
-		out.append(node.value);
+		out.append(escape(node.value.toString()));
 		out.append("</text>\n");
 		return null;
 	}
@@ -51,6 +70,13 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 		 buf[i] = ' ';
 		} 
 		return new String(buf);
+	}
+	
+	public String escape(String text) {
+		return text.replaceAll("&", "&amp;")
+				.replaceAll("<", "&lt;")
+				.replaceAll(">", "&gt;")
+				.replaceAll("\"", "&quot;");
 	}
 	
 	public String getOutput() {
