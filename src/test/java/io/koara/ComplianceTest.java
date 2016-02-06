@@ -48,7 +48,17 @@ public class ComplianceTest {
 		assertEquals(html, renderer.getOutput());
 	}
 	
-
+	@Test
+	public void testKoaraToXml() throws Exception {
+		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/" + testcase + ".kd"));
+		if(new File(TESTSUITE_FOLDER + "/xml/" + testcase + ".xml").exists()) {
+			String xml = readFile(TESTSUITE_FOLDER + "/xml/" + testcase + ".xml");
+			ASTDocument document = koara.Document();
+			XmlRenderer renderer = new XmlRenderer();
+			document.jjtAccept(renderer, null);
+			assertEquals(xml, renderer.getOutput());
+		}
+	}
 	
 	private String readFile(String path) throws IOException {
 		BufferedReader reader = null;
