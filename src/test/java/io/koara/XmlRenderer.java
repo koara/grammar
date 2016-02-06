@@ -50,6 +50,30 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTList node, Object data) {
+		level++;
+		out.append(indent() + "<list ordered=\"" + node.isOrdered() + "\">\n");
+		node.childrenAccept(this, data);
+		out.append(indent() + "</list>\n");
+		level--;
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTListItem node, Object data) {
+		level++;
+		out.append(indent() + "<listitem");
+		if(node.getNumber() != null) {
+			out.append(" number=\"" + node.getNumber() + "\"");
+		}
+		out.append(">\n");
+		node.childrenAccept(this, data);
+		out.append(indent() + "</listitem>\n");
+		level--;
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTText node, Object data) {
 		out.append(indent() + "<text>");
 		out.append(escape(node.value.toString()));
