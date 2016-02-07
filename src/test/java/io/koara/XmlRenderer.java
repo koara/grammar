@@ -31,8 +31,6 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 		} else {
 			out.append(" />\n");
 		}
-		
-		
 		level--;
 		return null;
 	}
@@ -78,6 +76,16 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTLink node, Object data) {
+		out.append(indent() + "<link url=\"" + escapeUrl(node.value.toString()) + "\">\n");
+		level++;
+		node.childrenAccept(this, data);
+		level--;
+		out.append(indent() + "</link>\n");
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTText node, Object data) {
 		out.append(indent() + "<text>");
 		out.append(escape(node.value.toString()));
@@ -89,6 +97,17 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	public Object visit(ASTLineBreak node, Object data) {
 		out.append(indent() + "<linebreak />\n");
 		return null;
+	}
+	
+	public String escapeUrl(String text) {
+		return text.replaceAll(" ", "%20")
+				.replaceAll("\"", "%22")
+				.replaceAll("`", "%60")
+				.replaceAll("<", "%3C")
+				.replaceAll(">", "%3E")
+				.replaceAll("\\[", "%5B")
+				.replaceAll("\\]", "%5D")
+				.replaceAll("\\\\", "%5C");
 	}
 	
 	public String indent() {
