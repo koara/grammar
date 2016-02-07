@@ -86,6 +86,16 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTImage node, Object data) {
+		out.append(indent() + "<image url=\"" + escapeUrl(node.value.toString()) + "\">\n");
+		level++;
+		node.childrenAccept(this, data);
+		level--;
+		out.append(indent() + "</image>\n");
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTText node, Object data) {
 		out.append(indent() + "<text>");
 		out.append(escape(node.value.toString()));
