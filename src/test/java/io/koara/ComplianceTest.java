@@ -21,18 +21,22 @@ public class ComplianceTest {
 
 	private static final String TESTSUITE_FOLDER = "src/test/testsuite";
 	
+	private String module;
 	private String testcase;
 	
-	public ComplianceTest(String testcase) {
+	public ComplianceTest(String module, String testcase) {
+  		this.module = module;
   		this.testcase = testcase;
     }
 	
 	@Parameters(name= "{0}: {1}")
 	public static Iterable<Object[]> data() {
 		List<Object[]> modules = new ArrayList<Object[]>();
-		for(File testcase : new File(TESTSUITE_FOLDER).listFiles()) {
-			if(!testcase.getName().startsWith("end2end") && testcase.getName().endsWith(".kd")) {
-				modules.add(new Object[]{testcase.getName().substring(0, testcase.getName().length() - 3)});
+		for(File module : new File(TESTSUITE_FOLDER + "/input").listFiles()) {
+			if(module.isDirectory()) {		
+				for(File testcase : module.listFiles()) {
+					modules.add(new Object[]{module.getName(), testcase.getName().substring(0, testcase.getName().length() - 3)});
+				}
 			}
 		}
 		return modules;
@@ -40,8 +44,8 @@ public class ComplianceTest {
 
 	@Test
 	public void testKoaraToHtml5() throws Exception {
-		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/" + testcase + ".kd"));
-		String html = readFile(TESTSUITE_FOLDER + "/html5/" + testcase + ".htm");
+		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/input/" + module + "/" + testcase + ".kd"));
+		String html = readFile(TESTSUITE_FOLDER + "/output/html5/" + module + "/" + testcase + ".htm");
 		ASTDocument document = koara.Document();
 		Html5Renderer renderer = new Html5Renderer();
 		document.jjtAccept(renderer, null);
@@ -50,9 +54,9 @@ public class ComplianceTest {
 	
 	@Test
 	public void testKoaraToXml() throws Exception {
-		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/" + testcase + ".kd"));
-		if(new File(TESTSUITE_FOLDER + "/xml/" + testcase + ".xml").exists()) {
-			String xml = readFile(TESTSUITE_FOLDER + "/xml/" + testcase + ".xml");
+		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/input/" + module + "/" + testcase + ".kd"));
+		if(new File(TESTSUITE_FOLDER + "/output/xml/" + module + "/" + testcase + ".xml").exists()) {
+			String xml = readFile(TESTSUITE_FOLDER + "/output/xml/" + module + "/" + testcase + ".xml");
 			ASTDocument document = koara.Document();
 			XmlRenderer renderer = new XmlRenderer();
 			document.jjtAccept(renderer, null);
