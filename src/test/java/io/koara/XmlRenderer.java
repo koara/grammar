@@ -66,9 +66,13 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 		if(node.getNumber() != null) {
 			out.append(" number=\"" + node.getNumber() + "\"");
 		}
-		out.append(">\n");
-		node.childrenAccept(this, data);
-		out.append(indent() + "</listitem>\n");
+		if(node.children != null && node.children.length > 0) {
+			out.append(">\n");
+			node.childrenAccept(this, data);
+			out.append(indent() + "</listitem>\n");
+		} else {
+			out.append(" />\n");
+		}
 		level--;
 		return null;
 	}
