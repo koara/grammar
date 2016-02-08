@@ -44,22 +44,33 @@ public class ComplianceTest {
 	@Test
 	public void testKoaraToHtml5() throws Exception {
 		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/input/" + module + "/" + testcase + ".kd"));
-		String html = readFile(TESTSUITE_FOLDER + "/output/html5/" + module + "/" + testcase + ".htm");
+		String output = readFile(TESTSUITE_FOLDER + "/output/html5/" + module + "/" + testcase + ".htm");
 		ASTDocument document = koara.Document();
 		Html5Renderer renderer = new Html5Renderer();
 		document.jjtAccept(renderer, null);
-		assertEquals(html, renderer.getOutput());
+		assertEquals(output, renderer.getOutput());
 	}
 	
 	@Test
 	public void testKoaraToXml() throws Exception {
 		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/input/" + module + "/" + testcase + ".kd"));
-		if(new File(TESTSUITE_FOLDER + "/output/xml/" + module + "/" + testcase + ".xml").exists()) {
-			String xml = readFile(TESTSUITE_FOLDER + "/output/xml/" + module + "/" + testcase + ".xml");
+		String output = readFile(TESTSUITE_FOLDER + "/output/xml/" + module + "/" + testcase + ".xml");
+		ASTDocument document = koara.Document();
+		XmlRenderer renderer = new XmlRenderer();
+		document.jjtAccept(renderer, null);
+		assertEquals(output, renderer.getOutput());
+	}
+	
+	
+	@Test
+	public void testKoaraToKoara() throws Exception {
+		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/input/" + module + "/" + testcase + ".kd"));
+		if(new File(TESTSUITE_FOLDER + "/output/koara/" + module + "/" + testcase + ".kd").exists()) {
+			String output = readFile(TESTSUITE_FOLDER + "/output/koara/" + module + "/" + testcase + ".kd");
 			ASTDocument document = koara.Document();
-			XmlRenderer renderer = new XmlRenderer();
+			KoaraRenderer renderer = new KoaraRenderer();
 			document.jjtAccept(renderer, null);
-			assertEquals(xml, renderer.getOutput());
+			assertEquals(output, renderer.getOutput());
 		}
 	}
 	
