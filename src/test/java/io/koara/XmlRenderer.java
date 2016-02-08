@@ -76,6 +76,44 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTBlockQuote node, Object data) {
+		level++;
+		out.append(indent() + "<blockquote");
+		if(node.children != null && node.children.length > 0) {
+			out.append(">\n");
+			level++;
+			node.childrenAccept(this, data);
+			level--;
+			out.append(indent() + "</blockquote>\n");
+			level--;
+		} else {
+			out.append(" />\n");
+		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTCodeBlock node, Object data) {
+		level++;
+		out.append(indent() + "<codeblock");
+		if(node.getLanguage() != null) {
+			out.append(" language=\"" + node.getLanguage() + "\"");
+		}
+		if(node.value != null && node.value.toString().length() > 0) {
+			out.append(">\n");
+			level++;
+			out.append(escape(node.value.toString()));
+			level--;
+			out.append(indent() + "</codeblock>\n");
+			level--;
+		} else {
+			out.append(" />\n");
+		}
+		return null;
+	}
+	
+	
+	@Override
 	public Object visit(ASTLink node, Object data) {
 		out.append(indent() + "<link url=\"" + escapeUrl(node.value.toString()) + "\">\n");
 		level++;
@@ -92,6 +130,36 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 		node.childrenAccept(this, data);
 		level--;
 		out.append(indent() + "</image>\n");
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTEm node, Object data) {
+		out.append(indent() + "<em>\n");
+		level++;
+		node.childrenAccept(this, data);
+		level--;
+		out.append(indent() + "</em>\n");
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTStrong node, Object data) {
+		out.append(indent() + "<strong>\n");
+		level++;
+		node.childrenAccept(this, data);
+		level--;
+		out.append(indent() + "</strong>\n");
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTCode node, Object data) {
+		out.append(indent() + "<code>\n");
+		level++;
+		node.childrenAccept(this, data);
+		level--;
+		out.append(indent() + "</code>\n");
 		return null;
 	}
 	
