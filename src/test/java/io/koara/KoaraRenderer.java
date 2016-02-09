@@ -38,6 +38,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		super.visit(node, data);
 		level--;
 		listSequence.pop();
+		out.append("\n");
 		return null;
 	}
 	
@@ -45,10 +46,15 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	public Object visit(ASTListItem node, Object data) {
 		boolean ordered = ((ASTList) node.parent).isOrdered();
 		Integer seq = (node.getNumber() != null) ? node.getNumber() : listSequence.peek() + 1;
-		out.append(indent() + (ordered ? seq + ". " : "- "));
-		level++;
-		super.visit(node, data);
-		level--;
+		out.append(indent() + (ordered ? seq + "." : "-"));
+		if(node.children != null && node.children.length > 0) {
+			out.append(" ");
+			level++;
+			super.visit(node, data);
+			level--;
+		} else {
+			out.append("\n");
+		}
 		return null;
 	}
 	
@@ -80,6 +86,8 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	private String escape(String text) {
 		return text.replaceAll("\\[", "\\\\[")
 				.replaceAll("\\]", "\\\\]")
+				.replaceAll("\\-", "\\\\-")
+				.replaceAll("(\\d)\\.", "\\\\$1\\\\.")
 				.replaceFirst("\\=", "\\\\=");
 	}
 	
