@@ -44,7 +44,7 @@ ASTDocument Document()           : {/*@bgen(jjtree) Document */
   }
 /*@egen*/}
 
-void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1)}) Heading()   | LOOKAHEAD(1) Blockquote()   | LOOKAHEAD(1) UnorderedList()   | LOOKAHEAD(2) OrderedList()   | LOOKAHEAD(FencedCodeBlock()) FencedCodeBlock()   | Paragraph() )  { currentBlockLevel--; }}void Heading()          : {/*@bgen(jjtree) Heading */
+void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1)}) Heading()   | LOOKAHEAD(1) BlockQuote()   | LOOKAHEAD(1) UnorderedList()   | LOOKAHEAD(2) OrderedList()   | LOOKAHEAD(FencedCodeBlock()) FencedCodeBlock()   | Paragraph() )  { currentBlockLevel--; }}void Heading()          : {/*@bgen(jjtree) Heading */
                            ASTHeading jjtn000 = new ASTHeading(JJTHEADING);
                            boolean jjtc000 = true;
                            jjtree.openNodeScope(jjtn000);
@@ -75,13 +75,13 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
       jjtree.closeNodeScope(jjtn000, true);
     }
   }
-/*@egen*/}void Blockquote()             : {/*@bgen(jjtree) Blockquote */
-                                  ASTBlockquote jjtn000 = new ASTBlockquote(JJTBLOCKQUOTE);
+/*@egen*/}void BlockQuote()             : {/*@bgen(jjtree) BlockQuote */
+                                  ASTBlockQuote jjtn000 = new ASTBlockQuote(JJTBLOCKQUOTE);
                                   boolean jjtc000 = true;
                                   jjtree.openNodeScope(jjtn000);
-/*@egen*/ currentQuoteLevel++; } {/*@bgen(jjtree) Blockquote */
+/*@egen*/ currentQuoteLevel++; } {/*@bgen(jjtree) BlockQuote */
   try {
-/*@egen*/  <GT> (LOOKAHEAD(BlockquoteEmptyLine() ) BlockquoteEmptyLine())* WhiteSpace()  [ BlockElement()    (LOOKAHEAD({blockAhead(0)}) (<EOL> WhiteSpace() BlockquotePrefix())+ BlockElement())*  ]  (LOOKAHEAD(BlockquoteEmptyLine() <EOL>) BlockquoteEmptyLine())*/*@bgen(jjtree)*/
+/*@egen*/  <GT> (LOOKAHEAD(BlockQuoteEmptyLine() ) BlockQuoteEmptyLine())* WhiteSpace()  [ BlockElement()    (LOOKAHEAD({blockAhead(0)}) (<EOL> WhiteSpace() BlockQuotePrefix())+ BlockElement())*  ]  (LOOKAHEAD(BlockQuoteEmptyLine() <EOL>) BlockQuoteEmptyLine())*/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;
@@ -106,7 +106,7 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
       jjtree.closeNodeScope(jjtn000, true);
     }
   }
-/*@egen*/}void BlockquotePrefix() : {int i=0;} {  (LOOKAHEAD({++i < currentQuoteLevel}) <GT> WhiteSpace())+}void BlockquoteEmptyLine() : {} {  <EOL> WhiteSpace() (LOOKAHEAD(1) <GT> WhiteSpace())+ }void UnorderedList()       : {/*@bgen(jjtree) List */
+/*@egen*/}void BlockQuotePrefix() : {int i=0;} {  (LOOKAHEAD({++i < currentQuoteLevel}) <GT> WhiteSpace())+}void BlockQuoteEmptyLine() : {} {  <EOL> WhiteSpace() (LOOKAHEAD(1) <GT> WhiteSpace())+ }void UnorderedList()       : {/*@bgen(jjtree) List */
                               ASTList jjtn000 = new ASTList(JJTLIST);
                               boolean jjtc000 = true;
                               jjtree.openNodeScope(jjtn000);
@@ -138,7 +138,7 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
                                      jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t;} {/*@bgen(jjtree) ListItem */
   try {
-/*@egen*/  t = <DASH> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead(t.beginColumn)}) (<EOL> WhiteSpace() [ LOOKAHEAD({currentQuoteLevel > 0}) BlockquotePrefix() ] )+ BlockElement())* ]/*@bgen(jjtree)*/
+/*@egen*/  t = <DASH> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead(t.beginColumn)}) (<EOL> WhiteSpace() [ LOOKAHEAD({currentQuoteLevel > 0}) BlockQuotePrefix() ] )+ BlockElement())* ]/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;
@@ -200,7 +200,7 @@ void BlockElement() : {currentBlockLevel++;} { (     LOOKAHEAD({headingAhead(1
                                    jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t;} {/*@bgen(jjtree) ListItem */
   try {
-/*@egen*/  (t = <DIGITS>) <DOT> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead(t.beginColumn)}) (<EOL> WhiteSpace() [ LOOKAHEAD({currentQuoteLevel > 0}) BlockquotePrefix() ] )+ BlockElement())* ]/*@bgen(jjtree)*/
+/*@egen*/  (t = <DIGITS>) <DOT> WhiteSpace() [ BlockElement() (LOOKAHEAD({blockAhead(t.beginColumn)}) (<EOL> WhiteSpace() [ LOOKAHEAD({currentQuoteLevel > 0}) BlockQuotePrefix() ] )+ BlockElement())* ]/*@bgen(jjtree)*/
   {
     jjtree.closeNodeScope(jjtn000, true);
     jjtc000 = false;

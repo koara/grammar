@@ -49,7 +49,7 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod3">BlockElement</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod4">Heading</A> | <A HREF="#prod5">Blockquote</A> | <A HREF="#prod6">UnorderedList</A> | <A HREF="#prod7">OrderedList</A> | <A HREF="#prod8">FencedCodeBlock</A> | <A HREF="#prod9">Paragraph</A> )</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( <A HREF="#prod4">Heading</A> | <A HREF="#prod5">BlockQuote</A> | <A HREF="#prod6">UnorderedList</A> | <A HREF="#prod7">OrderedList</A> | <A HREF="#prod8">FencedCodeBlock</A> | <A HREF="#prod9">Paragraph</A> )</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod4">Heading</A></TD>
@@ -57,17 +57,17 @@
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;EQ&gt; )+ <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod10">Text</A> | <A HREF="#prod11">Image</A> | <A HREF="#prod12">Link</A> | <A HREF="#prod13">Strong</A> | <A HREF="#prod14">Em</A> | <A HREF="#prod15">Code</A> | <A HREF="#prod16">LooseChar</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">Blockquote</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod5">BlockQuote</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>&lt;GT&gt; ( <A HREF="#prod17">BlockquoteEmptyLine</A> )* <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod18">BlockquotePrefix</A> )+ <A HREF="#prod3">BlockElement</A> )* )? ( <A HREF="#prod17">BlockquoteEmptyLine</A> )*</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;GT&gt; ( <A HREF="#prod17">BlockQuoteEmptyLine</A> )* <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> <A HREF="#prod18">BlockQuotePrefix</A> )+ <A HREF="#prod3">BlockElement</A> )* )? ( <A HREF="#prod17">BlockQuoteEmptyLine</A> )*</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod18">BlockquotePrefix</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod18">BlockQuotePrefix</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>( &lt;GT&gt; <A HREF="#prod2">WhiteSpace</A> )+</TD>
 </TR>
 <TR>
-<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod17">BlockquoteEmptyLine</A></TD>
+<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod17">BlockQuoteEmptyLine</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
 <TD ALIGN=LEFT VALIGN=BASELINE>&lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> ( &lt;GT&gt; <A HREF="#prod2">WhiteSpace</A> )+</TD>
 </TR>
@@ -79,7 +79,7 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod19">UnorderedListItem</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>&lt;DASH&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod18">BlockquotePrefix</A> )? )+ <A HREF="#prod3">BlockElement</A> )* )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>&lt;DASH&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod18">BlockQuotePrefix</A> )? )+ <A HREF="#prod3">BlockElement</A> )* )?</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod7">OrderedList</A></TD>
@@ -89,7 +89,7 @@
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod20">OrderedListItem</A></TD>
 <TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>
-<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;DIGITS&gt; ) &lt;DOT&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod18">BlockquotePrefix</A> )? )+ <A HREF="#prod3">BlockElement</A> )* )?</TD>
+<TD ALIGN=LEFT VALIGN=BASELINE>( &lt;DIGITS&gt; ) &lt;DOT&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod3">BlockElement</A> ( ( &lt;EOL&gt; <A HREF="#prod2">WhiteSpace</A> ( <A HREF="#prod18">BlockQuotePrefix</A> )? )+ <A HREF="#prod3">BlockElement</A> )* )?</TD>
 </TR>
 <TR>
 <TD ALIGN=RIGHT VALIGN=BASELINE><A NAME="prod8">FencedCodeBlock</A></TD>

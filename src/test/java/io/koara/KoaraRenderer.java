@@ -78,15 +78,40 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTLink node, Object data) {
+		out.append("[");
+		node.childrenAccept(this, data);
+		out.append("]");
+		if(node.value.toString() != "") {
+			out.append("(");
+			out.append(escapeUrl(node.value.toString()));
+			out.append(")");
+		}
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTText node, Object data) {
 		out.append(escape(node.value.toString()));
 		return null;
 	}
 	
+	private String escapeUrl(String text) {
+		return text.replaceAll("\\[", "\\\\[")
+				.replaceAll("\\]", "\\\\]")
+				.replaceAll("\\(", "\\\\(")
+				.replaceAll("\\)", "\\\\)");
+	}
+	
 	private String escape(String text) {
 		return text.replaceAll("\\[", "\\\\[")
 				.replaceAll("\\]", "\\\\]")
-				.replaceAll("\\-", "\\\\-")
+				.replaceAll("\\(", "\\\\(") // TODO: can be removed?
+				.replaceAll("\\)", "\\\\)") // TODO: can be removed?
+				.replaceAll("\\:", "\\\\:")
+				.replaceAll("\\-", "\\\\-") // TODO: only first?
+				.replaceAll("\\*", "\\\\*")
+				.replaceAll("\\_", "\\\\_")
 				.replaceAll("(\\d)\\.", "\\\\$1\\\\.")
 				.replaceFirst("\\=", "\\\\=");
 	}
