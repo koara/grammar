@@ -103,6 +103,22 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		return null;
 	}
 	
+	@Override
+	public Object visit(ASTEm node, Object data) {
+		out.append("_");
+		node.childrenAccept(this, data);
+		out.append("_");
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTStrong node, Object data) {
+		out.append("*");
+		node.childrenAccept(this, data);
+		out.append("*");
+		return null;
+	}
+	
 	
 	@Override
 	public Object visit(ASTText node, Object data) {
