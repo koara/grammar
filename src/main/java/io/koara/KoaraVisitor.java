@@ -19,4 +19,4 @@ public interface KoaraVisitor
   public Object visit(ASTCode node, Object data);
   public Object visit(ASTLineBreak node, Object data);
 }
-/* JavaCC - OriginalChecksum=392076de85d12d42090f3fc238fb7cd8 (do not edit this line) */
+/* JavaCC - OriginalChecksum=cb8028dfe708b24036bd69c6cb7339d2 (do not edit this line) */
