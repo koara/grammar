@@ -7,6 +7,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	private StringBuffer out;
 	private int level;
 	private Stack<Integer> listSequence;
+	private int blockQuote;
 	
 	@Override
 	public Object visit(ASTDocument node, Object data) {
@@ -19,6 +20,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	
 	@Override
 	public Object visit(ASTHeading node, Object data) {
+		quotes();
 		Integer headingLevel = Integer.parseInt(node.value.toString());
 		for(int i=0; i<headingLevel; i++) {
 			out.append("=");
@@ -27,7 +29,11 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 			out.append(" ");
 			super.visit(node, data);
 		}
-		out.append("\n\n");
+		out.append("\n");
+		if(!node.isLastElement()) {
+			quotes();
+			out.append("\n");
+		}
 		return null;
 	}
 	
@@ -59,21 +65,40 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTBlockQuote node, Object data) {
+		blockQuote++;
+		
+		if(node.hasChildren()) {
+			super.visit(node, data);
+		} else {
+			quotes();
+		}
+		out.append("\n");
+		blockQuote--;
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTParagraph node, Object data) {
-		if(node.parent.jjtGetChild(0) != node) {
+		if(!(node.parent instanceof ASTListItem) || node.parent.jjtGetChild(0) != node) {
 			out.append(indent());
 		}
+		quotes();
 		node.childrenAccept(this, data);
 		out.append("\n");
-		if(!node.isSingleChild()) {
+		if(!node.isLastElement()) {
+			quotes();
 			out.append("\n");
-		} 
+		} else if(!((SimpleNode) node.parent).isLastElement() && blockQuote > 1) {
+			quotes();
+		}
 		return null;
 	}
 	
 	@Override
 	public Object visit(ASTLineBreak node, Object data) {
 		out.append("\n" + indent());
+		quotes();
 		return null;
 	}
 	
@@ -156,6 +181,12 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 			return new String(buf);
 		}
 		return "";
+	}
+
+	public void quotes() {
+		for(int i=0; i < blockQuote; i++) {
+			out.append("> ");
+		}
 	}
 	
 	public String getOutput() {

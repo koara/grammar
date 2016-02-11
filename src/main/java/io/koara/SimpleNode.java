@@ -82,6 +82,14 @@ class SimpleNode implements Node {
   /* Override this method if you want to customize how the node dumps
      out its children. */
 
+  public boolean hasChildren() {
+	  return children != null && children.length > 0;
+  }
+  
+  public boolean isLastElement() {
+	  return parent != null && parent.jjtGetChild(parent.jjtGetNumChildren() - 1) == this;
+  }
+  
   public void dump(String prefix) {
     System.out.println(toString(prefix));
     if (children != null) {
