@@ -11,6 +11,20 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTHeading node, Object data) {
+		for(int i=0; i < node.getLevel(); i++) {
+			out.append("=");
+		}
+		if(node.hasChildren()) {
+			out.append(" ");
+			super.visit(node, data);
+		}
+		out.append("\n");
+		out.append("\n");	
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTParagraph node, Object data) {
 		super.visit(node, data);
 		out.append("\n");

@@ -9,13 +9,13 @@ class ASTHeading extends ASTBlockElement {
     super(id);
   }
 
-
-
   /** Accept the visitor. **/
   public Object jjtAccept(KoaraVisitor visitor, Object data) {
-
-    return
-    visitor.visit(this, data);
+    return visitor.visit(this, data);
+  }
+  
+  public int getLevel() {
+	  return Integer.parseInt(value.toString());
   }
 }
 /* JavaCC - OriginalChecksum=f63d0b6609019acb0a900867d3b7b6eb (do not edit this line) */

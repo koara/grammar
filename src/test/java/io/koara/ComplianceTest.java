@@ -75,12 +75,12 @@ public class ComplianceTest {
 			assertEquals(output, koaraRenderer.getOutput());
 			
 			// make sure the new 'formatted' koara code renders the small HTML output.
-//			String html5expected = readFile(TESTSUITE_FOLDER + "/output/html5/" + module + "/" + testcase + ".htm");
-//			koara = new Koara(new StringReader(output));
-//			document = koara.Document();
-//			Html5Renderer html5Renderer = new Html5Renderer();
-//			document.jjtAccept(html5Renderer, null);
-//			assertEquals(html5expected, html5Renderer.getOutput());
+			String html5expected = readFile(TESTSUITE_FOLDER + "/output/html5/" + module + "/" + testcase + ".htm");
+			koara = new Koara(new StringReader(koaraRenderer.getOutput()));
+			document = koara.Document();
+			Html5Renderer html5Renderer = new Html5Renderer();
+			document.jjtAccept(html5Renderer, null);
+			assertEquals(html5expected, html5Renderer.getOutput());
 		}
 	}
 	
