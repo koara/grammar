@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringBufferInputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,9 +70,17 @@ public class ComplianceTest {
 		if(new File(TESTSUITE_FOLDER + "/output/koara/" + module + "/" + testcase + ".kd").exists()) {
 			String output = readFile(TESTSUITE_FOLDER + "/output/koara/" + module + "/" + testcase + ".kd");
 			ASTDocument document = koara.Document();
-			KoaraRenderer renderer = new KoaraRenderer();
-			document.jjtAccept(renderer, null);
-			assertEquals(output, renderer.getOutput());
+			KoaraRenderer koaraRenderer = new KoaraRenderer();
+			document.jjtAccept(koaraRenderer, null);
+			assertEquals(output, koaraRenderer.getOutput());
+			
+			// make sure the new 'formatted' koara code renders the small HTML output.
+//			String html5expected = readFile(TESTSUITE_FOLDER + "/output/html5/" + module + "/" + testcase + ".htm");
+//			koara = new Koara(new StringReader(output));
+//			document = koara.Document();
+//			Html5Renderer html5Renderer = new Html5Renderer();
+//			document.jjtAccept(html5Renderer, null);
+//			assertEquals(html5expected, html5Renderer.getOutput());
 		}
 	}
 	
