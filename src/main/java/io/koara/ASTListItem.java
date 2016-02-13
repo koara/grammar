@@ -15,6 +15,10 @@ class ASTListItem extends SimpleNode {
     super(p, id);
   }
 
+  public boolean isOrdered() {
+	  return ((ASTList) this.parent).isOrdered();
+  }
+  
   public Integer getNumber() {
 	return number;
   }
@@ -26,4 +30,7 @@ class ASTListItem extends SimpleNode {
   public Object jjtAccept(KoaraVisitor visitor, Object data) {
 	  return visitor.visit(this, data);
   }
+  
+  
+  
 }
