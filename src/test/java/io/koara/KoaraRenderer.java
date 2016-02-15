@@ -34,8 +34,11 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		super.visit(node, data);
 		
 		out.append("\n");
-		out.append("\n");
 		
+		Node next = node.next();
+		if(next instanceof ASTList && ((ASTList) next).isOrdered() == node.isOrdered()) {
+			out.append("\n");
+		}
 		return null;
 	}
 	
@@ -51,8 +54,9 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 			level++;
 			super.visit(node, data);
 			level--;
+		} else {
+			out.append("\n");
 		}
-		out.append("\n");
 		return null;
 	}
 	
@@ -63,7 +67,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		}
 		super.visit(node, data);
 		out.append("\n");
-		if(!node.isNested()) {
+		if(!node.isLastElement() && !(node.parent instanceof ASTListItem && node.isFirstChild() && node.parent.jjtGetChild(1) instanceof ASTList)) {
 			out.append("\n");
 		}
 

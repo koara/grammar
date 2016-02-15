@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
   <paragraph>
-    <text>Unordered lists use 4 character indentation:</text>
+    <text>Unordered lists use 2 character indentation:</text>
   </paragraph>
   <list ordered="false">
     <listitem>
