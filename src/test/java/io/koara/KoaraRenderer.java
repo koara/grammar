@@ -75,6 +75,21 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTLink node, Object data) {
+		out.append("[");
+		node.childrenAccept(this, null);
+		out.append("]");
+		if(!node.value.equals("")) {
+			out.append("(");
+			out.append(node.value.toString()
+				.replaceAll("\\(", "\\\\(")
+				.replaceAll("\\)", "\\\\)"));
+			out.append(")");
+		}
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTText node, Object data) {
 		out.append(node.value.toString()
 				.replaceFirst("\\=", "\\\\=")
