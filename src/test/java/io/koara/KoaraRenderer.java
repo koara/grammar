@@ -32,9 +32,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	@Override
 	public Object visit(ASTList node, Object data) {
 		super.visit(node, data);
-		
 		out.append("\n");
-		
 		Node next = node.next();
 		if(next instanceof ASTList && ((ASTList) next).isOrdered() == node.isOrdered()) {
 			out.append("\n");
@@ -71,6 +69,21 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 			out.append("\n");
 		}
 
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTImage node, Object data) {
+		out.append("[image: ");
+		node.childrenAccept(this, null);
+		out.append("]");
+		if(!node.value.equals("")) {
+			out.append("(");
+			out.append(node.value.toString()
+				.replaceAll("\\(", "\\\\(")
+				.replaceAll("\\)", "\\\\)"));
+			out.append(")");
+		}
 		return null;
 	}
 	
