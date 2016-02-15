@@ -68,7 +68,22 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		if(!node.isLastElement() && !(node.parent instanceof ASTListItem && node.isFirstChild() && node.parent.jjtGetChild(1) instanceof ASTList)) {
 			out.append("\n");
 		}
-
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTEm node, Object data) {
+		out.append("_");
+		super.visit(node, data);
+		out.append("_");
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTStrong node, Object data) {
+		out.append("*");
+		super.visit(node, data);
+		out.append("*");
 		return null;
 	}
 	
@@ -109,6 +124,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 				.replaceFirst("\\-", "\\\\-")
 				.replaceAll("\\[", "\\\\[")
 				.replaceAll("\\*", "\\\\*")
+				.replaceAll("\\_", "\\\\_")
 				.replaceAll("(\\d+)\\.", "\\\\$1\\.")
 				.replaceAll("\\]", "\\\\]"));
 		return null;
@@ -117,7 +133,9 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	@Override
 	public Object visit(ASTLineBreak node, Object data) {
 		out.append("\n");
-		out.append(indent());
+		if(!(node.parent instanceof ASTStrong) && !(node.parent instanceof ASTEm)) {
+			out.append(indent());
+		}
 		return null;
 	}
 	
