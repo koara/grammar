@@ -86,6 +86,11 @@ class SimpleNode implements Node {
 	  return children != null && children.length > 0;
   }
   
+  public boolean isFirstElement() {
+	  return parent != null && parent.jjtGetChild(0) == this;
+  }
+  
+  
   public boolean isLastElement() {
 	  return parent != null && parent.jjtGetChild(parent.jjtGetNumChildren() - 1) == this;
   }

@@ -55,7 +55,7 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 		Integer seq = listSequence.peek() + 1;		
 		listSequence.set(listSequence.size() - 1, listSequence.peek() + 1);
 		out.append(indent() + "<li");
-		if(node.getNumber() != null && (seq != node.getNumber())) {
+		if(node.getNumber() != null && (!seq.equals(node.getNumber()))) {
 			out.append(" value=\"" + node.getNumber() + "\"");
 			listSequence.set(listSequence.size() - 1, node.getNumber());
 		}

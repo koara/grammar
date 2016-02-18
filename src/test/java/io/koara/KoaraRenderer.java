@@ -2,17 +2,17 @@ package io.koara;
 
 import java.util.Stack;
 
+/** BLOCKQUOTE 31, 60 */
 public class KoaraRenderer extends KoaraDefaultVisitor {
 
-	private StringBuilder out;
-	private int level;
-	private Stack<Integer> listSequence = new Stack<Integer>();
+	private StringBuffer out;
+	private Stack<String> lead = new Stack<String>();
 	
 	@Override
 	public Object visit(ASTDocument node, Object data) {
-		out = new StringBuilder();
-		level = 0;
-		return super.visit(node, data);
+		out = new StringBuffer();
+		super.visit(node, null);
+		return null;
 	}
 	
 	@Override
@@ -25,95 +25,22 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 			super.visit(node, data);
 		}
 		out.append("\n");
-		out.append("\n");	
-		return null;
-	}
-	
-	@Override
-	public Object visit(ASTList node, Object data) {
-		super.visit(node, data);
 		out.append("\n");
-		Node next = node.next();
-		if(next instanceof ASTList && ((ASTList) next).isOrdered() == node.isOrdered()) {
-			out.append("\n");
-		}
-		return null;
-	}
-	
-	@Override
-	public Object visit(ASTListItem node, Object data) {
-		if(node.isOrdered()) {
-			out.append(indent() + (node.getNumber() != null ? node.getNumber() : listSequence.peek()) + ".");		
-		} else {
-			out.append(indent() + "-");
-		}
-		if(node.hasChildren()) {
-			out.append(" ");
-			level++;
-			super.visit(node, data);
-			level--;
-		} else {
-			out.append("\n");
-		}
 		return null;
 	}
 	
 	@Override
 	public Object visit(ASTParagraph node, Object data) {
-		if(!(node.parent instanceof ASTListItem && node.isFirstChild())) {
-			out.append(indent());
-		}
 		super.visit(node, data);
 		out.append("\n");
-		if(!node.isLastElement() && !(node.parent instanceof ASTListItem && node.isFirstChild() && node.parent.jjtGetChild(1) instanceof ASTList)) {
-			out.append("\n");
-		}
+		out.append("\n");
 		return null;
 	}
 	
 	@Override
-	public Object visit(ASTEm node, Object data) {
-		out.append("_");
+	public Object visit(ASTLineBreak node, Object data) {
 		super.visit(node, data);
-		out.append("_");
-		return null;
-	}
-	
-	@Override
-	public Object visit(ASTStrong node, Object data) {
-		out.append("*");
-		super.visit(node, data);
-		out.append("*");
-		return null;
-	}
-	
-	@Override
-	public Object visit(ASTImage node, Object data) {
-		out.append("[image: ");
-		node.childrenAccept(this, null);
-		out.append("]");
-		if(!node.value.equals("")) {
-			out.append("(");
-			out.append(node.value.toString()
-				.replaceAll("\\(", "\\\\(")
-				.replaceAll("\\)", "\\\\)"));
-			out.append(")");
-		}
-		return null;
-	}
-	
-	@Override
-	public Object visit(ASTLink node, Object data) {
-		out.append("[");
-		node.childrenAccept(this, null);
-		out.append("]");
-		if(!node.value.equals("")) {
-			out.append("(");
-			out.append(node.value.toString()
-				.replaceAll("\\(", "\\\\(")
-				.replaceAll("\\)", "\\\\)"));
-			out.append(")");
-		}
+		out.append("\n");
 		return null;
 	}
 	
@@ -122,6 +49,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		out.append(node.value.toString()
 				.replaceFirst("\\=", "\\\\=")
 				.replaceFirst("\\-", "\\\\-")
+				.replaceFirst("\\>", "\\\\>")
 				.replaceAll("\\[", "\\\\[")
 				.replaceAll("\\*", "\\\\*")
 				.replaceAll("\\_", "\\\\_")
@@ -130,22 +58,10 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		return null;
 	}
 	
-	@Override
-	public Object visit(ASTLineBreak node, Object data) {
-		out.append("\n");
-		if(!(node.parent instanceof ASTStrong) && !(node.parent instanceof ASTEm)) {
-			out.append(indent());
+	private void lead() {
+		for(String l : lead) {
+			out.append(l);
 		}
-		return null;
-	}
-	
-	public String indent() {
-		int repeat = level * 2;
-	    final char[] buf = new char[repeat];
-		for (int i = repeat - 1; i >= 0; i--) {
-		 buf[i] = ' ';
-		} 
-		return new String(buf);
 	}
 	
 	public String getOutput() {
