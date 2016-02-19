@@ -122,7 +122,6 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
                                 System.out.println("> listItemAhead >> " + result + " (1)");
                                 return result;
                             }
-                            System.out.println("---");
                             boolean result = t.kind == DASH && t.beginColumn >= listBeginColumn;
                             System.out.println("> listItemAhead >> " + result + " (2)");
                             return result;

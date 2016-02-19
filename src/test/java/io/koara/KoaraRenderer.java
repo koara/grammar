@@ -30,10 +30,35 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 	}
 	
 	@Override
+	public Object visit(ASTList node, Object data) {
+		super.visit(node, data);
+		if(node.isNested()) {
+			lead.pop();
+		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTListItem node, Object data) {
+		out.append("- ");
+		super.visit(node, data);
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTParagraph node, Object data) {
 		super.visit(node, data);
+		
+		if(node.next() instanceof ASTList) {
+			lead.push("  ");
+		}
+
 		out.append("\n");
+		lead();
+		if(!node.isNested() || node.next() instanceof ASTParagraph) {
 		out.append("\n");
+		lead();	
+		}
 		return null;
 	}
 	
@@ -43,6 +68,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 		out.append("\n");
 		return null;
 	}
+	
 	
 	@Override
 	public Object visit(ASTText node, Object data) {
@@ -63,6 +89,7 @@ public class KoaraRenderer extends KoaraDefaultVisitor {
 			out.append(l);
 		}
 	}
+	
 	
 	public String getOutput() {
 		return out.toString().trim();
