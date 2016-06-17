@@ -122,6 +122,7 @@ public class Koara/*@bgen(jjtree)*/implements KoaraTreeConstants, KoaraConstants
                                 System.out.println("> listItemAhead >> " + result + " (1)");
                                 return result;
                             }
+                            System.out.println("---");
                             boolean result = t.kind == DASH && t.beginColumn >= listBeginColumn;
                             System.out.println("> listItemAhead >> " + result + " (2)");
                             return result;
@@ -1642,6 +1643,7 @@ s.append("    ");
           break label_37;
         }
         LineBreak();
+        WhiteSpace();
         StrongMultilineContent();
       }
       jj_consume_token(ASTERISK);
@@ -1758,6 +1760,7 @@ if (jjtc003) {
           break label_39;
         }
         LineBreak();
+        WhiteSpace();
         StrongWithinEmMultilineContent();
       }
       jj_consume_token(ASTERISK);
@@ -2074,6 +2077,7 @@ if (jjtc000) {
           break label_43;
         }
         LineBreak();
+        WhiteSpace();
         EmMultilineContent();
       }
       jj_consume_token(UNDERSCORE);
@@ -2190,6 +2194,7 @@ if (jjtc003) {
           break label_45;
         }
         LineBreak();
+        WhiteSpace();
         EmWithinStrongMultilineContent();
       }
       jj_consume_token(UNDERSCORE);
@@ -4045,6 +4050,7 @@ if (jjtc000) {
   private boolean jj_3R_253()
  {
     if (jj_3R_267()) return true;
+    if (jj_3R_232()) return true;
     if (jj_3R_252()) return true;
     return false;
   }
@@ -4497,6 +4503,7 @@ if (jjtc000) {
   private boolean jj_3R_255()
  {
     if (jj_3R_267()) return true;
+    if (jj_3R_232()) return true;
     if (jj_3R_254()) return true;
     return false;
   }

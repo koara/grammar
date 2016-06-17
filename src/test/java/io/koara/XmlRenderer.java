@@ -4,10 +4,14 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 
 	private StringBuffer out;
 	private int level;
+	private String declarationTag;
 	
 	@Override
 	public Object visit(ASTDocument node, Object data) {
-		out = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+		out = new StringBuffer();
+		if(declarationTag != null) {
+		    out.append(declarationTag + "\n");
+		}
 		if(node.children != null && node.children.length > 0) {
 			out.append("<document>\n");
 			node.childrenAccept(this, data);
@@ -97,18 +101,18 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 		level++;
 		out.append(indent() + "<codeblock");
 		if(node.getLanguage() != null) {
-			out.append(" language=\"" + node.getLanguage() + "\"");
+			out.append(" language=\"" + escape(node.getLanguage()) + "\"");
 		}
 		if(node.value != null && node.value.toString().length() > 0) {
-			out.append(">\n");
+			out.append(">");
 			level++;
 			out.append(escape(node.value.toString()));
 			level--;
-			out.append(indent() + "</codeblock>\n");
-			level--;
+			out.append("</codeblock>\n");
 		} else {
 			out.append(" />\n");
 		}
+		level--;
 		return null;
 	}
 	
@@ -206,6 +210,10 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	
 	public String getOutput() {
 		return out.toString().trim();
+	}
+	
+	public void setDeclarationTag(String declarationTag) {
+		this.declarationTag = declarationTag;
 	}
 	
 }
