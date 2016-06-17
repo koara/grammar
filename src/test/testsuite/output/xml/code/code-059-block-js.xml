@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="javascript">
-'use strict';
+  <codeblock language="javascript">'use strict';
 
 /**
  * @ngdoc module
@@ -660,5 +658,5 @@ function $RouteProvider() {
       return result.join('');
     }
   }];
-}  </codeblock>
+}</codeblock>
 </document>

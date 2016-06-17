@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="coffee">
-crypto = require 'crypto'
+  <codeblock language="coffee">crypto = require 'crypto'
 ipc = require 'ipc'
 os = require 'os'
 path = require 'path'
@@ -885,5 +883,5 @@ if includeDeprecatedAPIs
 
   # Deprecated: Callers should be converted to use atom.deserializers
   Atom::registerRepresentationClasses = -&gt;
-    deprecate(&quot;Callers should be converted to use atom.deserializers&quot;)  </codeblock>
+    deprecate(&quot;Callers should be converted to use atom.deserializers&quot;)</codeblock>
 </document>

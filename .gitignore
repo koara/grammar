@@ -1,5 +1,7 @@
 .classpath
 .project
+.idea
 *.prefs
+*.iml
 bin
 build

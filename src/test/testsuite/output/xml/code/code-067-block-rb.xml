@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="ruby">
-module ActionMailer
+  <codeblock language="ruby">module ActionMailer
   # Provides helper methods for ActionMailer::Base that can be used for easily
   # formatting messages, accessing mailer or message instances, and the
   # attachments list.
@@ -70,5 +68,5 @@ module ActionMailer
       }.join &quot;\n&quot;
     end
   end
-end  </codeblock>
+end</codeblock>
 </document>

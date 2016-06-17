@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="go">
-// Copyright 2015 Google Inc. All rights reserved
+  <codeblock language="go">// Copyright 2015 Google Inc. All rights reserved
 //
 // Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
 // you may not use this file except in compliance with the License.
@@ -160,5 +158,5 @@ func (ast *exportAST) eval(ev *Evaluator) error {
 func (ast *exportAST) show() {
     // TODO
     logf(&quot;export&quot;)
-}  </codeblock>
+}</codeblock>
 </document>

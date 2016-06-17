@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="javascript">
-function greeting() {
+  <codeblock language="javascript">function greeting() {
   console.log(&quot;Hello World&quot;);
-}  </codeblock>
+}</codeblock>
   <paragraph>
     <text>A blank line is not necassary:</text>
   </paragraph>

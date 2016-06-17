@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="objectivec">
-// AFURLResponseSerialization.m
+  <codeblock language="objectivec">// AFURLResponseSerialization.m
 // Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -797,5 +795,5 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
     return serializer;
 }
 
-@end  </codeblock>
+@end</codeblock>
 </document>

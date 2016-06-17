@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="r">
-Kernel &lt;- setRefClass(&quot;Kernel&quot;,
+  <codeblock language="r">Kernel &lt;- setRefClass(&quot;Kernel&quot;,
                 fields = c(&quot;connection_info&quot;, &quot;zmqctx&quot;, &quot;sockets&quot;, &quot;executor&quot;),
                 methods= list(
 
@@ -292,5 +290,5 @@ installspec &lt;- function(user=T) {
     user_flag=ifelse(user, &quot;--user&quot;, &quot;&quot;)
     cmd = paste(&quot;ipython kernelspec install --replace --name ir&quot;, user_flag,srcdir, sep=&quot; &quot;)
     system(cmd, wait=TRUE)
-}  </codeblock>
+}</codeblock>
 </document>

@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="html">
-&lt;!DOCTYPE html&gt;
+  <codeblock language="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;!-- Meta, title, CSS, favicons, etc. --&gt;
@@ -273,5 +271,5 @@
 &lt;/script&gt;
 
   &lt;/body&gt;
-&lt;/html&gt;  </codeblock>
+&lt;/html&gt;</codeblock>
 </document>

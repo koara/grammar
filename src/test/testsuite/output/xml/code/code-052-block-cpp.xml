@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="cpp">
-/*
+  <codeblock language="cpp">/*
   This file is part of the PhantomJS project from Ofi Labs.
 
   Copyright (C) 2012 execjosh, http://execjosh.blogspot.com
@@ -136,5 +134,5 @@ ChildProcess::~ChildProcess()
 QObject* ChildProcess::_createChildProcessContext()
 {
     return new ChildProcessContext(this);
-}  </codeblock>
+}</codeblock>
 </document>

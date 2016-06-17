@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="shell">
-# Node Version Manager
+  <codeblock language="shell"># Node Version Manager
 # Implemented as a POSIX-compliant function
 # Should work on sh, dash, bash, ksh, zsh
 # To use source this file from your bash profile
@@ -1890,5 +1888,5 @@ elif nvm_rc_version &gt;/dev/null 2&gt;&amp;1; then
   nvm use &gt;/dev/null
 fi
 
-} # this ensures the entire script is downloaded #  </codeblock>
+} # this ensures the entire script is downloaded #</codeblock>
 </document>

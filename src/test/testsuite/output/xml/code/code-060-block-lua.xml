@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <codeblock language="lua">
-local lapis = require &quot;lapis&quot;
+  <codeblock language="lua">local lapis = require &quot;lapis&quot;
 local utils = require &quot;kong.tools.utils&quot;
 local stringy = require &quot;stringy&quot;
 local responses = require &quot;kong.tools.responses&quot;
@@ -161,5 +159,5 @@ if configuration and configuration.plugins_available then
   end
 end
 
-return app  </codeblock>
+return app</codeblock>
 </document>
