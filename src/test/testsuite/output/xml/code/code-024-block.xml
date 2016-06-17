@@ -1,5 +1,0 @@
-<document>
-  <codeblock>function greeting() {
-  console.log(&quot;Hello World&quot;);
-}</codeblock>
-</document>

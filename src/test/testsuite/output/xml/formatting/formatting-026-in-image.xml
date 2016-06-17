@@ -1,9 +1,0 @@
-<document>
-  <paragraph>
-    <image url="http://also.not.in/*url*">
-      <text>*</text>
-      <text>this does not works</text>
-      <text>*</text>
-    </image>
-  </paragraph>
-</document>

@@ -1,9 +1,0 @@
-<document>
-  <paragraph>
-    <text>This is an </text>
-    <link url="">
-      <text>internal link</text>
-    </link>
-    <text>.</text>
-  </paragraph>
-</document>

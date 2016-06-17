@@ -1,9 +1,0 @@
-<document>
-  <paragraph>
-    <text>Empty links </text>
-    <text>[</text>
-    <text>] and </text>
-    <text>[</text>
-    <text>]() are not allowed.</text>
-  </paragraph>
-</document>

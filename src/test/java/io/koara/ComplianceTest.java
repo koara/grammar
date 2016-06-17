@@ -18,8 +18,6 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class ComplianceTest {
 
-	private static final String TESTSUITE_FOLDER = "src/test/testsuite";
-	
 	private String module;
 	private String testcase;
 	
@@ -31,7 +29,7 @@ public class ComplianceTest {
 	@Parameters(name= "{0}: {1}")
 	public static Iterable<Object[]> data() {
 		List<Object[]> modules = new ArrayList<Object[]>();
-		for(File module : new File(TESTSUITE_FOLDER + "/input").listFiles()) {
+		for(File module : new File("testsuite/input").listFiles()) {
 			if(module.isDirectory()) {		
 				for(File testcase : module.listFiles()) {
 					modules.add(new Object[]{module.getName(), testcase.getName().substring(0, testcase.getName().length() - 3)});
@@ -43,8 +41,8 @@ public class ComplianceTest {
 
 	@Test
 	public void testKoaraToHtml5() throws Exception {
-		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/input/" + module + "/" + testcase + ".kd"));
-		String output = readFile(TESTSUITE_FOLDER + "/output/html5/" + module + "/" + testcase + ".htm");
+		Koara koara = new Koara(new FileInputStream("testsuite/input/" + module + "/" + testcase + ".kd"));
+		String output = readFile("testsuite/output/html5/" + module + "/" + testcase + ".htm");
 		ASTDocument document = koara.Document();
 		Html5Renderer renderer = new Html5Renderer();
 		document.jjtAccept(renderer, null);
@@ -53,14 +51,13 @@ public class ComplianceTest {
 	
 	@Test
 	public void testKoaraToXml() throws Exception {
-		Koara koara = new Koara(new FileInputStream(TESTSUITE_FOLDER + "/input/" + module + "/" + testcase + ".kd"));
-		String output = readFile(TESTSUITE_FOLDER + "/output/xml/" + module + "/" + testcase + ".xml");
+		Koara koara = new Koara(new FileInputStream("testsuite/input/" + module + "/" + testcase + ".kd"));
+		String output = readFile("testsuite/output/xml/" + module + "/" + testcase + ".xml");
 		ASTDocument document = koara.Document();
 		XmlRenderer renderer = new XmlRenderer();
 		document.jjtAccept(renderer, null);
 		assertEquals(output, renderer.getOutput());
 	}
-	
 	
 	private String readFile(String path) throws IOException {
 		BufferedReader reader = null;
@@ -78,7 +75,5 @@ public class ComplianceTest {
 			reader.close();
 		}
     }
-	
-	
 	
 }

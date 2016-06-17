@@ -1,8 +1,0 @@
-<document>
-  <paragraph>
-    <image url="(foo">
-      <text>image</text>
-    </image>
-    <text>and(bar))</text>
-  </paragraph>
-</document>

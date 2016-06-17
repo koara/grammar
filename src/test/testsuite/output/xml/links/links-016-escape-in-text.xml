@@ -1,8 +1,0 @@
-<document>
-  <paragraph>
-    <text>Escape in text: </text>
-    <link url="/url">
-      <text>hi]</text>
-    </link>
-  </paragraph>
-</document>

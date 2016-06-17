@@ -1,8 +1,0 @@
-<document>
-  <paragraph>
-    <link url="(foo">
-      <text>link</text>
-    </link>
-    <text>and(bar))</text>
-  </paragraph>
-</document>

@@ -1,9 +1,0 @@
-<document>
-  <paragraph>
-    <text>Inline </text>
-    <code>
-      <text>code</text>
-    </code>
-    <text> works with backticks.</text>
-  </paragraph>
-</document>

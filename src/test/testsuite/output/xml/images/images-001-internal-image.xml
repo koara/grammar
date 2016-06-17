@@ -1,8 +1,0 @@
-<document>
-  <paragraph>
-    <text>This is an </text>
-    <image url="">
-      <text>internal image</text>
-    </image>
-  </paragraph>
-</document>
