@@ -1119,15 +1119,20 @@ void Text()       : {/*@bgen(jjtree) Text */
     }
   }
 /*@egen*/ 	}void LineBreak()            : {/*@bgen(jjtree) LineBreak */
-  ASTLineBreak jjtn000 = new ASTLineBreak(JJTLINEBREAK);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/} {/*@bgen(jjtree) LineBreak */
+                               ASTLineBreak jjtn000 = new ASTLineBreak(JJTLINEBREAK);
+                               boolean jjtc000 = true;
+                               jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t;} {/*@bgen(jjtree) LineBreak */
   try {
-/*@egen*/  <EOL>/*@bgen(jjtree)*/
+/*@egen*/  t = <EOL>/*@bgen(jjtree)*/
+  {
+    jjtree.closeNodeScope(jjtn000, true);
+    jjtc000 = false;
+  }
+/*@egen*/  { jjtn000.setExplicit(t.image.startsWith("  ")); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
     }
   }
-/*@egen*/}void WhiteSpace() : {} {  (LOOKAHEAD (1) (<SPACE> | <TAB>))*}
+/*@egen*/ 	}void WhiteSpace() : {} {  (LOOKAHEAD (1) (<SPACE> | <TAB>))*}

@@ -2868,11 +2868,14 @@ if (jjtc000) {
   }
 
   final public void LineBreak() throws ParseException {/*@bgen(jjtree) LineBreak */
-  ASTLineBreak jjtn000 = new ASTLineBreak(JJTLINEBREAK);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+                               ASTLineBreak jjtn000 = new ASTLineBreak(JJTLINEBREAK);
+                               boolean jjtc000 = true;
+                               jjtree.openNodeScope(jjtn000);Token t;
     try {
-      jj_consume_token(EOL);
+      t = jj_consume_token(EOL);
+jjtree.closeNodeScope(jjtn000, true);
+    jjtc000 = false;
+jjtn000.setExplicit(t.image.startsWith("  "));
     } finally {
 if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);

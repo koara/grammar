@@ -7,6 +7,7 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	private StringBuffer out;
 	private int level;
 	private Stack<Integer> listSequence = new Stack<Integer>();
+	private boolean hardWrap;
 
 	@Override
 	public Object visit(ASTDocument node, Object data) {
@@ -151,7 +152,11 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 	
 	@Override
 	public Object visit(ASTLineBreak node, Object data) {
-		out.append("<br>\n" + indent());
+		if(hardWrap || node.isExplicit()) {
+			out.append("<br>\n" + indent());
+		} else {
+			out.append(" ");
+		}
 		return super.visit(node, data);
 	}
 	
@@ -173,6 +178,10 @@ public class Html5Renderer extends KoaraDefaultVisitor {
 		 buf[i] = ' ';
 		} 
 		return new String(buf);
+	}
+	
+	public void setHardWrap(boolean hardWrap) {
+		this.hardWrap = hardWrap;
 	}
 	
 	public String getOutput() {

@@ -5,6 +5,7 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	private StringBuffer out;
 	private int level;
 	private String declarationTag;
+	private boolean hardWrap;
 	
 	@Override
 	public Object visit(ASTDocument node, Object data) {
@@ -177,7 +178,8 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 	
 	@Override
 	public Object visit(ASTLineBreak node, Object data) {
-		out.append(indent() + "<linebreak />\n");
+		boolean hard = hardWrap || node.isExplicit();
+		out.append(indent() + "<linebreak explicit=\"" + hard + "\"/>\n");
 		return null;
 	}
 	
@@ -208,12 +210,16 @@ public class XmlRenderer extends KoaraDefaultVisitor {
 				.replaceAll("\"", "&quot;");
 	}
 	
-	public String getOutput() {
-		return out.toString().trim();
+	public void setHardWrap(boolean hardWrap) {
+		this.hardWrap = hardWrap;
 	}
 	
 	public void setDeclarationTag(String declarationTag) {
 		this.declarationTag = declarationTag;
+	}
+	
+	public String getOutput() {
+		return out.toString().trim();
 	}
 	
 }
